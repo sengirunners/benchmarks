@@ -203,9 +203,13 @@ def main():
 
     porder = {k: i for i, k in enumerate(pkeys)}
     rorder = {r["label"]: i for i, r in enumerate(rconf["runners"])}
-    runs_out = [{"project": m["project"], "runner": key_of[m["label"]], "rep": m["rep"], "seconds": m["seconds"],
-                 "queue_s": m["queue_s"], "run_url": m["run_url"], "job_url": m["job_url"]}
-                for m in sorted(measured, key=lambda m: (porder[m["project"]], rorder[m["label"]], m["run_id"]))]
+    # Measured jobs plus the measured-round jobs that did not succeed (failed, timed out, cancelled),
+    # each with its conclusion. Warm-up, pilot, hand-excluded and wrong-size jobs are only in `excluded`.
+    listed = measured + [m for m in store if m.get("excluded", "").startswith("job ") and m["started_at"]
+                         and m["label"] in rorder and m["project"] in porder]
+    runs_out = [{"project": m["project"], "runner": key_of[m["label"]], "rep": m["rep"], "conclusion": m["conclusion"],
+                 "seconds": m["seconds"], "queue_s": m["queue_s"], "run_url": m["run_url"], "job_url": m["job_url"]}
+                for m in sorted(listed, key=lambda m: (porder[m["project"]], rorder[m["label"]], m["run_id"]))]
     days = sorted({m["completed_at"][:10] for m in measured})
     out = {
         "page": "https://sengi.run/benchmarks",
