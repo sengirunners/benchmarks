@@ -492,8 +492,9 @@ jobs:
       # rebuilt CSS files after counting watcher END events (it races a second one against 100 ms,
       # a workaround for rolldown issue 10613). The number and timing of END events vary, so on
       # any machine the files are sometimes read before the rebuild has written them. Instead,
-      # wait (up to 10 s) until the rebuilt files referenced by the manifest exist and contain the
-      # new colour, then run upstream's assertions unchanged. Fails if the code changed.
+      # wait (up to 30 s) until the rebuilt files referenced by the manifest exist and contain the
+      # new colour and have stayed so for half a second (a rebuild can rewrite them more than once),
+      # then run upstream's assertions unchanged. Fails if the code changed.
       - name: Make the legacy watch test wait for the rebuilt files
         shell: bash
         run: |
@@ -501,7 +502,7 @@ jobs:
           p = "playground/legacy/__tests__/watch/legacy-styles-only-entry-watch.spec.ts"
           s = open(p).read()
           old = "  await Promise.race([notifyRebuildComplete(watcher), setTimeout(100)])\n"
-          new = old + """  for (let i = 0; i < 100; i++) {
+          new = old + """  for (let i = 0, stable = 0; i < 300; i++) {
               let done = false
               try {
                 const m: any = readManifest('watch')
@@ -512,7 +513,8 @@ jobs:
               } catch {
                 done = false // a file is being rewritten; try again
               }
-              if (done) break
+              stable = done ? stable + 1 : 0
+              if (stable >= 5) break
               await setTimeout(100)
             }
           """
