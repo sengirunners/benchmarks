@@ -732,6 +732,13 @@ jobs:
           allow-prereleases: true
           pip-version: "25.3"
           pip-install: --group tox
+      # PORTABILITY: pytest 9.1 (June 2026, after this release) deprecates a config API the project's own
+      # pytest plugin uses, and the project's warnings-as-errors setting turns that into a crash on
+      # every runner. Keep pytest on the 9.0 line this release was tested with.
+      - name: Keep pytest on the release's line
+        run: |
+          echo "pytest<9.1" > "$RUNNER_TEMP/constraints.txt"
+          echo "PIP_CONSTRAINT=$RUNNER_TEMP/constraints.txt" >> "$GITHUB_ENV"
       - name: Unit tests
         run: tox -e ci-py313 -- -v --color=yes
 
