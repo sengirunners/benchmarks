@@ -2,7 +2,7 @@
   "runners": [
     {
       "key": "github",
-      "label": "ubuntu-latest",
+      "label": "ubuntu-24.04",
       "name": "GitHub-hosted",
       "tier": "github"
     },

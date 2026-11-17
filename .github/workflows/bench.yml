@@ -10,7 +10,7 @@ on:
         description: runs-on label of the runner class under test
         type: choice
         options:
-          - ubuntu-latest
+          - ubuntu-24.04
           - sengi-basic-2-ubuntu-2404
           - sengi-premium-2-ubuntu-2404
           - sengi-basic-4-ubuntu-2404
@@ -51,7 +51,7 @@ jobs:
         run: |
           set -euo pipefail
           case "$SCHEDULE" in
-            '17 3 * * 0') label=ubuntu-latest ;;
+            '17 3 * * 0') label=ubuntu-24.04 ;;
             '17 5 * * 0') label=sengi-basic-2-ubuntu-2404 ;;
             '17 7 * * 0') label=sengi-premium-2-ubuntu-2404 ;;
             '17 9 * * 0') label=sengi-basic-4-ubuntu-2404 ;;

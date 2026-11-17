@@ -38,8 +38,9 @@ example, a stock Ubuntu image needs a few system packages that GitHub's image al
 
 ## Method
 
-- **Runners.** `ubuntu-latest` (GitHub's standard runner; on a public repository it has 4 vCPU),
-  `sengi-basic-2`, `sengi-premium-2`, `sengi-basic-4` and `sengi-premium-4` (Ubuntu 24.04). Every
+- **Runners.** `ubuntu-24.04` (GitHub's standard runner; on a public repository it has 4 vCPU),
+  `sengi-basic-2`, `sengi-premium-2`, `sengi-basic-4` and `sengi-premium-4`, all on Ubuntu 24.04
+  (GitHub's `ubuntu-latest` has moved to a newer Ubuntu, so it is not used). Every
   job records the vCPU count, CPU and memory it ran on (the `rb-probe` step); the results print the
   measured vCPU count, not a nominal one.
 - **One run = one runner class x all twelve projects.** The jobs run in four lanes, so at most four
@@ -67,8 +68,8 @@ Fork this repository, then run the bench workflow for a runner class and repetit
 class at a time:
 
 ```sh
-gh workflow run bench.yml -f runner=ubuntu-latest -f rep=warmup
-gh workflow run bench.yml -f runner=ubuntu-latest -f rep=1
+gh workflow run bench.yml -f runner=ubuntu-24.04 -f rep=warmup
+gh workflow run bench.yml -f runner=ubuntu-24.04 -f rep=1
 ```
 
 Then collect (needs the `gh` CLI, Python 3 and read access to the repository's Actions):
