@@ -58,11 +58,21 @@ def gh_pages(path, key):
 
 
 def job_log(job_id):
-    try:
-        return subprocess.run(["gh", "api", f"repos/{REPO}/actions/jobs/{job_id}/logs"],
-                              check=True, capture_output=True, text=True).stdout
-    except subprocess.CalledProcessError:
-        return ""
+    # Newer gh refuses output with terminal escapes (job logs have colour codes) unless told to allow it.
+    for extra in (["--allow-escape-sequences"], []):
+        done = subprocess.run(["gh", "api", *extra, f"repos/{REPO}/actions/jobs/{job_id}/logs"],
+                              capture_output=True, text=True)
+        if done.returncode == 0:
+            return done.stdout
+    print(f"warning: no log for job {job_id}: {done.stderr.strip()[:200]}", file=sys.stderr)
+    return ""
+
+
+def probe(row):
+    if row["conclusion"] in ("success", "failure", "timed_out") and row["started_at"]:
+        m = PROBE.search(job_log(row["job_id"]))
+        if m:
+            row.update(cpu=m.group(1), nproc=int(m.group(3)), mem_kib=int(m.group(4)))
 
 
 def ts(value):
@@ -90,10 +100,7 @@ def read_run(run):
             "runner_name": job.get("runner_name"),
             "cpu": None, "nproc": None, "mem_kib": None,
         }
-        if job["conclusion"] in ("success", "failure", "timed_out") and job["started_at"]:
-            m = PROBE.search(job_log(job["id"]))
-            if m:
-                row.update(cpu=m.group(1), nproc=int(m.group(3)), mem_kib=int(m.group(4)))
+        probe(row)
         rows.append(row)
     return rows
 
@@ -120,6 +127,9 @@ def main():
             new = read_run(run)
             print(f"run {run['id']}: {len(new)} jobs")
             store += new
+    for row in store:
+        if row["nproc"] is None:
+            probe(row)  # a log that could not be read last time
     store.sort(key=lambda r: (r["run_id"], r["job_id"]))
     RESULTS.mkdir(exist_ok=True)
     STORE.write_text(json.dumps(store, indent=1) + "\n")
@@ -170,7 +180,8 @@ def main():
             if diff.returncode != 0:
                 sys.exit(f"measured runs at {sha} and {bench_commit} ran different workflows; exclude one set")
 
-    prices = json.loads(urllib.request.urlopen(rconf["price_source"], timeout=30).read())
+    req = urllib.request.Request(rconf["price_source"], headers={"User-Agent": "benchmarks-collector/1 (+https://github.com/sengirunners/benchmarks)"})
+    prices = json.loads(urllib.request.urlopen(req, timeout=30).read())
     rows = {r["runner"]: r for r in prices["price_table"]["rows"]}
     runners = []
     for r in rconf["runners"]:
