@@ -39,7 +39,7 @@ files.each do |path|
   else []
   end
   errors << "#{name}: no triggers" if triggers.empty?
-  (triggers - ALLOWED_TRIGGERS).each { errors << "#{name}: trigger #{it} is not allowed (only #{ALLOWED_TRIGGERS.join(", ")})" }
+  (triggers - ALLOWED_TRIGGERS).each { |t| errors << "#{name}: trigger #{t} is not allowed (only #{ALLOWED_TRIGGERS.join(", ")})" }
 
   top = doc["permissions"]
   errors << "#{name}: top-level permissions must be exactly contents: read" unless top == {"contents" => "read"}
@@ -49,7 +49,7 @@ files.each do |path|
     writer = WRITERS.dig(name, id)
     if writer
       errors << "#{name}/#{id}: the writing job must run on #{writer}" unless job["runs-on"] == writer
-      unless perms.is_a?(Hash) && perms.values.all? { %w[read write].include?(it) } && (perms.keys - %w[contents actions]).empty?
+      unless perms.is_a?(Hash) && perms.values.all? { |v| %w[read write].include?(v) } && (perms.keys - %w[contents actions]).empty?
         errors << "#{name}/#{id}: permissions may only be contents and actions"
       end
     else
@@ -67,6 +67,6 @@ end
 if errors.empty?
   puts "ok: #{files.size} workflow files, triggers #{ALLOWED_TRIGGERS.join(" and ")} only, no secrets, actions pinned"
 else
-  errors.each { warn "error: #{it}" }
+  errors.each { |e| warn "error: #{e}" }
   exit 1
 end
