@@ -1,0 +1,859 @@
+# One run = one runner class x the 12 projects. Each job is one project's own CI job, pinned to a
+# release commit; see README.md for the method. Jobs run in four lanes (at most four jobs at a time),
+# so a run takes about as long as its longest lane. Runner classes are run one at a time.
+name: bench
+run-name: bench ${{ inputs.runner || 'weekly' }} rep ${{ inputs.rep || 'weekly' }}
+on:
+  workflow_dispatch:
+    inputs:
+      runner:
+        description: runs-on label of the runner class under test
+        type: choice
+        options:
+          - ubuntu-latest
+          - sengi-basic-2-ubuntu-2404
+          - sengi-premium-2-ubuntu-2404
+          - sengi-basic-4-ubuntu-2404
+          - sengi-premium-4-ubuntu-2404
+      rep:
+        description: repetition label, shown in the run and job names (warmup, pilot, 1, 2, ...)
+        type: string
+        required: true
+  # Weekly, one runner class at a time, two hours apart (Sunday, UTC).
+  schedule:
+    - cron: '17 3 * * 0'
+    - cron: '17 5 * * 0'
+    - cron: '17 7 * * 0'
+    - cron: '17 9 * * 0'
+    - cron: '17 11 * * 0'
+permissions:
+  contents: read
+concurrency:
+  group: bench
+  cancel-in-progress: false
+jobs:
+  plan:
+    name: plan
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    timeout-minutes: 5
+    outputs:
+      label: ${{ steps.pick.outputs.label }}
+      rep: ${{ steps.pick.outputs.rep }}
+    steps:
+      - id: pick
+        shell: bash
+        env:
+          INPUT_RUNNER: ${{ inputs.runner }}
+          INPUT_REP: ${{ inputs.rep }}
+          SCHEDULE: ${{ github.event.schedule }}
+        run: |
+          set -euo pipefail
+          case "$SCHEDULE" in
+            '17 3 * * 0') label=ubuntu-latest ;;
+            '17 5 * * 0') label=sengi-basic-2-ubuntu-2404 ;;
+            '17 7 * * 0') label=sengi-premium-2-ubuntu-2404 ;;
+            '17 9 * * 0') label=sengi-basic-4-ubuntu-2404 ;;
+            '17 11 * * 0') label=sengi-premium-4-ubuntu-2404 ;;
+            '') label="$INPUT_RUNNER" ;;
+            *) echo "unknown schedule: $SCHEDULE"; exit 1 ;;
+          esac
+          rep="${INPUT_REP:-weekly-$(date -u +%F)}"
+          [[ "$rep" =~ ^[A-Za-z0-9._-]+$ ]] || { echo "rep must be letters, digits, dot, dash or underscore"; exit 1; }
+          echo "label=$label" >> "$GITHUB_OUTPUT"
+          echo "rep=$rep" >> "$GITHUB_OUTPUT"
+          echo "runner class $label, rep $rep"
+
+  # Workload "guava": google/guava@v33.7.2 (666338cc49d5686c07e3e4d17f0aa1cec25a2be6)
+  # Adapted from upstream .github/workflows/ci.yml, job "pom.xml on JDK 25 on ubuntu-latest".
+  # Changes from the project's own job are marked PORTABILITY and are the same on every runner.
+  guava:
+    name: guava / ${{ needs.plan.outputs.label }} / rep ${{ needs.plan.outputs.rep }}
+    needs: [plan]
+    if: ${{ !cancelled() && needs.plan.result == 'success' }}
+    runs-on: ${{ needs.plan.outputs.label }}
+    permissions:
+      contents: read
+    timeout-minutes: 90
+    env:
+      ROOT_POM: pom.xml
+    steps:
+      - name: rb-probe
+        shell: bash
+        run: |
+          m=$(grep -m1 'model name' /proc/cpuinfo | cut -d: -f2 | xargs)
+          case "$m" in *EPYC*) fam="AMD EPYC";; *Ryzen*) fam="AMD Ryzen";; *Xeon*|*XEON*) fam="Intel Xeon";; *Intel*) fam="Intel";; *AMD*) fam="AMD";; *) fam="other";; esac
+          ghz=$(awk -F: '/cpu MHz/{printf "%.1f", $2/1000; exit}' /proc/cpuinfo)
+          echo "rb-probe cpu=\"$fam\" ghz=${ghz:-unknown} nproc=$(nproc) mem_kib=$(awk '/MemTotal/{print $2}' /proc/meminfo) swap_kib=$(awk '/SwapTotal/{print $2}' /proc/meminfo)"
+      - name: 'Check out repository'
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: google/guava
+          ref: 666338cc49d5686c07e3e4d17f0aa1cec25a2be6 # v33.7.2
+          persist-credentials: false
+      - name: 'Set up JDKs'
+        uses: actions/setup-java@03ad4de0992f5dab5e18fcb136590ce7c4a0ac95 # v5.6.0
+        with:
+          java-version: |
+            25
+            26
+          distribution: 'temurin'
+          cache: 'maven'
+      - name: 'Install'
+        shell: bash
+        run: ./mvnw -B -ntp -Dtoolchain.skip install -U -DskipTests=true -f $ROOT_POM
+      - name: 'Test'
+        shell: bash
+        run: ./mvnw -B -ntp -P!standard-with-extra-repos -Dtoolchain.skip verify -U -Dmaven.javadoc.skip=true -Dsurefire.toolchain.version=25 -f $ROOT_POM
+      - name: 'Print Surefire reports'
+        if: ${{ failure() }}
+        shell: bash
+        run: ./util/print_surefire_reports.sh
+
+  # Workload "codex-lint": openai/codex@rust-v0.159.3 (01fc69f4026735edfdf6789820549727a4867b11)
+  # Adapted from upstream .github/workflows/rust-ci-full.yml, job "lint_build" (ubuntu-24.04, x86_64-unknown-linux-gnu, dev).
+  # Changes from the project's own job are marked PORTABILITY and are the same on every runner.
+  codex:
+    name: codex / ${{ needs.plan.outputs.label }} / rep ${{ needs.plan.outputs.rep }}
+    needs: [plan]
+    if: ${{ !cancelled() && needs.plan.result == 'success' }}
+    runs-on: ${{ needs.plan.outputs.label }}
+    permissions:
+      contents: read
+    timeout-minutes: 120
+    defaults:
+      run:
+        working-directory: codex-rs
+    env:
+      USE_SCCACHE: 'true'
+      CARGO_INCREMENTAL: "0"
+      SCCACHE_CACHE_SIZE: 10G
+    steps:
+      - name: rb-probe
+        shell: bash
+        working-directory: ${{ github.workspace }}
+        run: |
+          m=$(grep -m1 'model name' /proc/cpuinfo | cut -d: -f2 | xargs)
+          case "$m" in *EPYC*) fam="AMD EPYC";; *Ryzen*) fam="AMD Ryzen";; *Xeon*|*XEON*) fam="Intel Xeon";; *Intel*) fam="Intel";; *AMD*) fam="AMD";; *) fam="other";; esac
+          ghz=$(awk -F: '/cpu MHz/{printf "%.1f", $2/1000; exit}' /proc/cpuinfo)
+          echo "rb-probe cpu=\"$fam\" ghz=${ghz:-unknown} nproc=$(nproc) mem_kib=$(awk '/MemTotal/{print $2}' /proc/meminfo) swap_kib=$(awk '/SwapTotal/{print $2}' /proc/meminfo)"
+          # Pages swapped out so far, to show at the end of the job whether this job used swap.
+          echo "rb-swap-start pswpout=$(awk '/^pswpout/{print $2}' /proc/vmstat)"
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          repository: openai/codex
+          ref: 01fc69f4026735edfdf6789820549727a4867b11 # rust-v0.159.3
+          persist-credentials: false
+      # PORTABILITY: upstream's setup-ci sets kernel.unprivileged_userns_clone, a sysctl that only
+      # Debian/Ubuntu-patched kernels have; on other kernels it fails the job. Run it only where it exists.
+      - name: Guard the userns sysctl
+        shell: bash
+        working-directory: ${{ github.workspace }}
+        run: sed -i 's#sudo sysctl -w kernel.unprivileged_userns_clone=1#if [ -e /proc/sys/kernel/unprivileged_userns_clone ]; then sudo sysctl -w kernel.unprivileged_userns_clone=1; fi#' .github/actions/setup-ci/action.yml
+      - uses: ./.github/actions/setup-ci
+      - name: Install Linux build dependencies
+        if: ${{ runner.os == 'Linux' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if command -v apt-get >/dev/null 2>&1; then
+            sudo apt-get update -y
+            sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends build-essential pkg-config libcap-dev libasound2-dev libglib2.0-dev libdbus-1-dev  # PORTABILITY: + libglib2.0-dev libdbus-1-dev (present on GitHub's image, not on plain Ubuntu)
+          fi
+      - uses: dtolnay/rust-toolchain@e081816240890017053eacbb1bdf337761dc5582 # 1.95.0
+        with:
+          targets: x86_64-unknown-linux-gnu
+          components: clippy
+
+      - if: ${{ false }}
+        name: Use hermetic Cargo home (musl)
+        shell: bash
+        run: |
+          set -euo pipefail
+          cargo_home="${GITHUB_WORKSPACE}/.cargo-home"
+          mkdir -p "${cargo_home}/bin"
+          echo "CARGO_HOME=${cargo_home}" >> "$GITHUB_ENV"
+          echo "${cargo_home}/bin" >> "$GITHUB_PATH"
+          : > "${cargo_home}/config.toml"
+
+      - name: Compute lockfile hash
+        id: lockhash
+        working-directory: codex-rs
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "hash=$(sha256sum Cargo.lock | cut -d' ' -f1)" >> "$GITHUB_OUTPUT"
+          echo "toolchain_hash=$(sha256sum rust-toolchain.toml | cut -d' ' -f1)" >> "$GITHUB_OUTPUT"
+
+      # Explicit cache restore: cargo home and target are cached apart, so we can
+      # avoid caching the large target dir on the gnu-dev job.
+      - name: Restore cargo home cache
+        id: cache_cargo_home_restore
+        uses: actions/cache/restore@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5.0.4
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            ${{ github.workspace }}/.cargo-home/bin/
+            ${{ github.workspace }}/.cargo-home/registry/index/
+            ${{ github.workspace }}/.cargo-home/registry/cache/
+            ${{ github.workspace }}/.cargo-home/git/db/
+          key: cargo-home-ubuntu-24.04-x86_64-unknown-linux-gnu-dev-${{ steps.lockhash.outputs.hash }}-${{ steps.lockhash.outputs.toolchain_hash }}
+          restore-keys: |
+            cargo-home-ubuntu-24.04-x86_64-unknown-linux-gnu-dev-
+
+      # Install and restore sccache cache
+      - name: Install sccache
+        if: ${{ env.USE_SCCACHE == 'true' }}
+        uses: taiki-e/install-action@44c6d64aa62cd779e873306675c7a58e86d6d532 # v2.62.49
+        with:
+          tool: sccache
+          version: 0.7.5
+
+      - name: Configure sccache backend
+        if: ${{ env.USE_SCCACHE == 'true' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -n "${ACTIONS_CACHE_URL:-}" && -n "${ACTIONS_RUNTIME_TOKEN:-}" ]]; then
+            echo "SCCACHE_GHA_ENABLED=true" >> "$GITHUB_ENV"
+            echo "Using sccache GitHub backend"
+          else
+            echo "SCCACHE_GHA_ENABLED=false" >> "$GITHUB_ENV"
+            echo "SCCACHE_DIR=${{ github.workspace }}/.sccache" >> "$GITHUB_ENV"
+            echo "Using sccache local disk + actions/cache fallback"
+          fi
+
+      - name: Enable sccache wrapper
+        if: ${{ env.USE_SCCACHE == 'true' }}
+        shell: bash
+        run: echo "RUSTC_WRAPPER=sccache" >> "$GITHUB_ENV"
+
+      - name: Restore sccache cache (fallback)
+        if: ${{ env.USE_SCCACHE == 'true' && env.SCCACHE_GHA_ENABLED != 'true' }}
+        id: cache_sccache_restore
+        uses: actions/cache/restore@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5.0.4
+        with:
+          path: ${{ github.workspace }}/.sccache/
+          key: sccache-ubuntu-24.04-x86_64-unknown-linux-gnu-dev-${{ steps.lockhash.outputs.hash }}-${{ github.run_id }}
+          restore-keys: |
+            sccache-ubuntu-24.04-x86_64-unknown-linux-gnu-dev-${{ steps.lockhash.outputs.hash }}-
+            sccache-ubuntu-24.04-x86_64-unknown-linux-gnu-dev-
+
+      - if: ${{ false }}
+        name: Prepare APT cache directories (musl)
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo mkdir -p /var/cache/apt/archives /var/lib/apt/lists
+          sudo chown -R "$USER:$USER" /var/cache/apt /var/lib/apt/lists
+
+      - if: ${{ false }}
+        name: Restore APT cache (musl)
+        id: cache_apt_restore
+        uses: actions/cache/restore@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5.0.4
+        with:
+          path: |
+            /var/cache/apt
+          key: apt-ubuntu-24.04-x86_64-unknown-linux-gnu-v1
+
+      - if: ${{ false }}
+        name: Install Zig
+        uses: mlugg/setup-zig@d1434d08867e3ee9daa34448df10607b98908d29 # v2.2.1
+        with:
+          version: 0.14.0
+
+      - if: ${{ false }}
+        name: Install musl build tools
+        env:
+          DEBIAN_FRONTEND: noninteractive
+          TARGET: x86_64-unknown-linux-gnu
+          APT_UPDATE_ARGS: -o Acquire::Retries=3
+          APT_INSTALL_ARGS: --no-install-recommends
+        shell: bash
+        run: bash "${GITHUB_WORKSPACE}/.github/scripts/install-musl-build-tools.sh"
+
+      - name: Configure rusty_v8 artifact overrides and verify checksums
+        uses: ./.github/actions/setup-rusty-v8
+        with:
+          target: x86_64-unknown-linux-gnu
+
+      - name: Install cargo-chef
+        if: ${{ false }}
+        uses: taiki-e/install-action@44c6d64aa62cd779e873306675c7a58e86d6d532 # v2.62.49
+        with:
+          tool: cargo-chef
+          version: 0.1.71
+
+      - name: Pre-warm dependency cache (cargo-chef)
+        if: ${{ false }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          RECIPE="${RUNNER_TEMP}/chef-recipe.json"
+          cargo chef prepare --recipe-path "$RECIPE"
+          cargo chef cook --recipe-path "$RECIPE" --target x86_64-unknown-linux-gnu --release
+
+      - name: cargo clippy
+        # PORTABILITY: codex-voice-host needs gstreamer >= 1.28, which no stock
+        # Ubuntu 24.04 runner has (upstream's own runner image does); it is a leaf crate, excluded here.
+        # PORTABILITY: no `-D warnings`. Upstream's own Linux-gnu Lint/Build is red at every main commit for
+        # days (unused imports in codex-core tests); the compile work is identical, the job ends green.
+        run: cargo clippy --workspace --exclude codex-voice-host --target x86_64-unknown-linux-gnu --tests --profile dev --timings
+
+      - name: Upload Cargo timings (clippy)
+        if: always()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        with:
+          name: cargo-timings-rust-ci-clippy-x86_64-unknown-linux-gnu-dev
+          path: ${{ env.CARGO_TARGET_DIR }}/**/cargo-timings/cargo-timing.html
+          if-no-files-found: warn
+
+      # Save caches explicitly; make non-fatal so cache packaging
+      # never fails the overall job. Only save when key wasn't hit.
+      - name: Save cargo home cache
+        if: always() && !cancelled() && steps.cache_cargo_home_restore.outputs.cache-hit != 'true'
+        continue-on-error: true
+        uses: actions/cache/save@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5.0.4
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            ${{ github.workspace }}/.cargo-home/bin/
+            ${{ github.workspace }}/.cargo-home/registry/index/
+            ${{ github.workspace }}/.cargo-home/registry/cache/
+            ${{ github.workspace }}/.cargo-home/git/db/
+          key: cargo-home-ubuntu-24.04-x86_64-unknown-linux-gnu-dev-${{ steps.lockhash.outputs.hash }}-${{ steps.lockhash.outputs.toolchain_hash }}
+
+      - name: Save sccache cache (fallback)
+        if: always() && !cancelled() && env.USE_SCCACHE == 'true' && env.SCCACHE_GHA_ENABLED != 'true'
+        continue-on-error: true
+        uses: actions/cache/save@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5.0.4
+        with:
+          path: ${{ github.workspace }}/.sccache/
+          key: sccache-ubuntu-24.04-x86_64-unknown-linux-gnu-dev-${{ steps.lockhash.outputs.hash }}-${{ github.run_id }}
+
+      - name: sccache stats
+        if: always() && env.USE_SCCACHE == 'true'
+        continue-on-error: true
+        run: sccache --show-stats || true
+
+      - name: sccache summary
+        if: always() && env.USE_SCCACHE == 'true'
+        shell: bash
+        run: |
+          {
+            echo "### sccache stats — x86_64-unknown-linux-gnu (dev)";
+            echo;
+            echo '```';
+            sccache --show-stats || true;
+            echo '```';
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Save APT cache (musl)
+        if: false
+        continue-on-error: true
+        uses: actions/cache/save@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5.0.4
+        with:
+          path: |
+            /var/cache/apt
+          key: apt-ubuntu-24.04-x86_64-unknown-linux-gnu-v1
+
+      # Memory record (every provider): pages swapped out during the job and swap in use at the end.
+      - name: rb-swap
+        if: ${{ always() }}
+        shell: bash
+        run: echo "rb-swap-end pswpout=$(awk '/^pswpout/{print $2}' /proc/vmstat) swap_used_kib=$(awk '/SwapTotal/{t=$2} /SwapFree/{f=$2} END{print t-f}' /proc/meminfo)"
+
+  # Workload "cli": cli/cli@v2.102.0 (fc4b137cdef0a6bd28fd461b7cf9c84a5812a8cd)
+  # Adapted from upstream .github/workflows/go.yml, job "build (ubuntu-latest)".
+  # Changes from the project's own job are marked PORTABILITY and are the same on every runner.
+  cli:
+    name: cli / ${{ needs.plan.outputs.label }} / rep ${{ needs.plan.outputs.rep }}
+    needs: [plan, codex]
+    if: ${{ !cancelled() && needs.plan.result == 'success' }}
+    runs-on: ${{ needs.plan.outputs.label }}
+    permissions:
+      contents: read
+    timeout-minutes: 45
+    env:
+      # PORTABILITY (source-keyed caches): the same commit runs every time, so Go's test-result
+      # cache would report every package "(cached)". -count=1 disables only the result cache;
+      # module and build caches (setup-go) are kept.
+      GOFLAGS: -count=1
+    steps:
+      - name: rb-probe
+        shell: bash
+        run: |
+          m=$(grep -m1 'model name' /proc/cpuinfo | cut -d: -f2 | xargs)
+          case "$m" in *EPYC*) fam="AMD EPYC";; *Ryzen*) fam="AMD Ryzen";; *Xeon*|*XEON*) fam="Intel Xeon";; *Intel*) fam="Intel";; *AMD*) fam="AMD";; *) fam="other";; esac
+          ghz=$(awk -F: '/cpu MHz/{printf "%.1f", $2/1000; exit}' /proc/cpuinfo)
+          echo "rb-probe cpu=\"$fam\" ghz=${ghz:-unknown} nproc=$(nproc) mem_kib=$(awk '/MemTotal/{print $2}' /proc/meminfo) swap_kib=$(awk '/SwapTotal/{print $2}' /proc/meminfo)"
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: cli/cli
+          ref: fc4b137cdef0a6bd28fd461b7cf9c84a5812a8cd # v2.102.0
+          persist-credentials: false
+      - name: Set up Go
+        uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version-file: "go.mod"
+      - name: Download dependencies
+        run: go mod download
+      - name: Run unit and integration tests
+        run: go test -race -tags=integration ./...
+      - name: Build
+        run: go build -v ./cmd/gh
+
+  # Workload "ts": microsoft/TypeScript@v6.0.3 (050880ce59e30b356b686bd3144efe24f875ebc8)
+  # Adapted from upstream .github/workflows/ci.yml, job "Test Node 24 on ubuntu-latest".
+  # Changes from the project's own job are marked PORTABILITY and are the same on every runner.
+  typescript:
+    name: typescript / ${{ needs.plan.outputs.label }} / rep ${{ needs.plan.outputs.rep }}
+    needs: [plan]
+    if: ${{ !cancelled() && needs.plan.result == 'success' }}
+    runs-on: ${{ needs.plan.outputs.label }}
+    permissions:
+      contents: read
+    timeout-minutes: 90
+    steps:
+      - name: rb-probe
+        shell: bash
+        run: |
+          m=$(grep -m1 'model name' /proc/cpuinfo | cut -d: -f2 | xargs)
+          case "$m" in *EPYC*) fam="AMD EPYC";; *Ryzen*) fam="AMD Ryzen";; *Xeon*|*XEON*) fam="Intel Xeon";; *Intel*) fam="Intel";; *AMD*) fam="AMD";; *) fam="other";; esac
+          ghz=$(awk -F: '/cpu MHz/{printf "%.1f", $2/1000; exit}' /proc/cpuinfo)
+          echo "rb-probe cpu=\"$fam\" ghz=${ghz:-unknown} nproc=$(nproc) mem_kib=$(awk '/MemTotal/{print $2}' /proc/meminfo) swap_kib=$(awk '/SwapTotal/{print $2}' /proc/meminfo)"
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: microsoft/TypeScript
+          ref: 050880ce59e30b356b686bd3144efe24f875ebc8 # v6.0.3
+          persist-credentials: false
+      - name: Use node version 24
+        uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
+        with:
+          node-version: '24'
+          check-latest: true
+      - run: npm ci
+      # PORTABILITY (all runners): build the test bundle in its own step. The test step's own build
+      # is then an up-to-date no-op.
+      - name: Build tests
+        run: npx hereby tests --bundle=true
+      - name: Tests
+        id: test
+        env:
+          BUNDLE: 'true'
+        run: npm run test -- --no-lint --bundle="$BUNDLE"
+
+  # Workload "vite": vitejs/vite@v8.3.1 (39ddf7ccf7e7469ff6a3ba37bca38c32ea804d6e)
+  # Adapted from upstream .github/workflows/ci.yml, job "Build&Test: node-24, ubuntu-latest".
+  # Changes from the project's own job are marked PORTABILITY and are the same on every runner.
+  vite:
+    name: vite / ${{ needs.plan.outputs.label }} / rep ${{ needs.plan.outputs.rep }}
+    needs: [plan, typescript]
+    if: ${{ !cancelled() && needs.plan.result == 'success' }}
+    runs-on: ${{ needs.plan.outputs.label }}
+    permissions:
+      contents: read
+    timeout-minutes: 40
+    steps:
+      - name: rb-probe
+        shell: bash
+        run: |
+          m=$(grep -m1 'model name' /proc/cpuinfo | cut -d: -f2 | xargs)
+          case "$m" in *EPYC*) fam="AMD EPYC";; *Ryzen*) fam="AMD Ryzen";; *Xeon*|*XEON*) fam="Intel Xeon";; *Intel*) fam="Intel";; *AMD*) fam="AMD";; *) fam="other";; esac
+          ghz=$(awk -F: '/cpu MHz/{printf "%.1f", $2/1000; exit}' /proc/cpuinfo)
+          echo "rb-probe cpu=\"$fam\" ghz=${ghz:-unknown} nproc=$(nproc) mem_kib=$(awk '/MemTotal/{print $2}' /proc/meminfo) swap_kib=$(awk '/SwapTotal/{print $2}' /proc/meminfo)"
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: vitejs/vite
+          ref: 39ddf7ccf7e7469ff6a3ba37bca38c32ea804d6e # v8.3.1
+          persist-credentials: false
+      # PORTABILITY: upstream's environment-react-ssr "deps reload" test asserts the ORDER of two log
+      # lines that come from racing paths (a fixed 200 ms timer vs a browser round trip), so faster
+      # machines lose the race. Compare the two lines order-insensitively. Fails if the code changed.
+      - name: Make the deps-reload log assertion order-insensitive
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          p = "playground/environment-react-ssr/__tests__/environment-react-ssr.spec.ts"
+          s = open(p).read()
+          old_a = ".filter(Boolean),\n      )\n      .toStrictEqual(['react-fake-server', 'react-fake-client'])"
+          new_a = ".filter(Boolean)\n          .sort(),\n      )\n      .toStrictEqual(['react-fake-client', 'react-fake-server'])"
+          assert s.count(old_a) == 1, "deps-reload assertion not found; review the portability patch"
+          open(p, "w").write(s.replace(old_a, new_a))
+          PY
+      # PORTABILITY: upstream's legacy "styles only entry" watch test reads the manifest and the
+      # rebuilt CSS files after counting watcher END events (it races a second one against 100 ms,
+      # a workaround for rolldown issue 10613). The number and timing of END events vary, so on
+      # any machine the files are sometimes read before the rebuild has written them. Instead,
+      # wait (up to 10 s) until the rebuilt files referenced by the manifest exist and contain the
+      # new colour, then run upstream's assertions unchanged. Fails if the code changed.
+      - name: Make the legacy watch test wait for the rebuilt files
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          p = "playground/legacy/__tests__/watch/legacy-styles-only-entry-watch.spec.ts"
+          s = open(p).read()
+          old = "  await Promise.race([notifyRebuildComplete(watcher), setTimeout(100)])\n"
+          new = old + """  for (let i = 0; i < 100; i++) {
+              let done = false
+              try {
+                const m: any = readManifest('watch')
+                done = ['style-only-entry.css', 'style-only-entry-legacy.css'].every((k) => {
+                  const f = m?.[k]?.file
+                  return !!f && !!findAssetFile(f.substring('assets/'.length), 'watch')?.includes('#ffb6c1')
+                })
+              } catch {
+                done = false // a file is being rewritten; try again
+              }
+              if (done) break
+              await setTimeout(100)
+            }
+          """
+          assert s.count(old) == 1, "legacy watch wait not found; review the portability patch"
+          open(p, "w").write(s.replace(old, new))
+          PY
+      # PORTABILITY: Node before pnpm (see wl-vue.yml).
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version: 24
+      - name: Install pnpm
+        uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+      - name: Set node version to 24
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version: 24
+          cache: "pnpm"
+      - name: Install deps
+        run: pnpm install
+      - name: Set Playwright path and Get playwright version
+        run: |
+          echo "PLAYWRIGHT_BROWSERS_PATH=$HOME/.cache/playwright-bin" >> $GITHUB_ENV
+          PLAYWRIGHT_VERSION="$(pnpm ls --depth 0 --json -w playwright-chromium | jq --raw-output '.[0].devDependencies["playwright-chromium"].version')"
+          echo "PLAYWRIGHT_VERSION=$PLAYWRIGHT_VERSION" >> $GITHUB_ENV
+      - name: Cache Playwright's binary
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        with:
+          key: ${{ runner.os }}-playwright-bin-v1-${{ env.PLAYWRIGHT_VERSION }}
+          path: ${{ env.PLAYWRIGHT_BROWSERS_PATH }}
+          restore-keys: |
+            ${{ runner.os }}-playwright-bin-v1-
+      # PORTABILITY: --with-deps installs Chromium's system libraries, which GitHub's image ships
+      # and a plain Ubuntu image doesn't. On GitHub's image it finds them already installed.
+      - name: Install Playwright
+        run: pnpm playwright install --with-deps chromium
+      - name: Build
+        run: pnpm run build
+      - name: Test unit
+        run: pnpm run test-unit
+      - name: Test serve
+        run: pnpm run test-serve
+      - name: Test serve (bundled dev)
+        run: pnpm run test-serve-bundled
+      - name: Test build
+        run: pnpm run test-build
+
+  # Workload "monorepo": vercel/ai@ai@7.0.126 (45e1fbc3ea10d22f852e12b1c1851e289c85e835)
+  # Adapted from upstream .github/workflows/ci.yml, job "Build Examples (next-core)".
+  # Changes from the project's own job are marked PORTABILITY and are the same on every runner.
+  vercel-ai:
+    name: vercel-ai / ${{ needs.plan.outputs.label }} / rep ${{ needs.plan.outputs.rep }}
+    needs: [plan]
+    if: ${{ !cancelled() && needs.plan.result == 'success' }}
+    runs-on: ${{ needs.plan.outputs.label }}
+    permissions:
+      contents: read
+    timeout-minutes: 90
+    steps:
+      - name: rb-probe
+        shell: bash
+        run: |
+          m=$(grep -m1 'model name' /proc/cpuinfo | cut -d: -f2 | xargs)
+          case "$m" in *EPYC*) fam="AMD EPYC";; *Ryzen*) fam="AMD Ryzen";; *Xeon*|*XEON*) fam="Intel Xeon";; *Intel*) fam="Intel";; *AMD*) fam="AMD";; *) fam="other";; esac
+          ghz=$(awk -F: '/cpu MHz/{printf "%.1f", $2/1000; exit}' /proc/cpuinfo)
+          echo "rb-probe cpu=\"$fam\" ghz=${ghz:-unknown} nproc=$(nproc) mem_kib=$(awk '/MemTotal/{print $2}' /proc/meminfo) swap_kib=$(awk '/SwapTotal/{print $2}' /proc/meminfo)"
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: vercel/ai
+          ref: 45e1fbc3ea10d22f852e12b1c1851e289c85e835 # ai@7.0.126
+          persist-credentials: false
+      # PORTABILITY: Node before pnpm (see wl-vue.yml).
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22
+      - name: Setup pnpm
+        uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6.0.9
+      - name: Use Node.js 22
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      # PORTABILITY (source-keyed caches): upstream restores .turbo/.next build caches keyed by commit.
+      # The benchmark builds the same commit on every run, so a restored cache would replay every
+      # task and turn the job into a no-op. The restore is omitted: this is the full build that a
+      # change to shared packages triggers. Dependency caches (pnpm store) are kept.
+      - name: Build Examples
+        run: pnpm exec turbo build --filter=@example/next --filter=@example/next-openai --filter=@example/next-agent
+
+  # Workload "container": mastodon/mastodon@v4.7.2 (3987b9fd624010eeeaeb7cad96606b05aa813f6a)
+  # Adapted from upstream .github/workflows/build-container-image.yml, job "build-image (linux/amd64)".
+  # Changes from the project's own job are marked PORTABILITY and are the same on every runner.
+  mastodon:
+    name: mastodon / ${{ needs.plan.outputs.label }} / rep ${{ needs.plan.outputs.rep }}
+    needs: [plan, vercel-ai]
+    if: ${{ !cancelled() && needs.plan.result == 'success' }}
+    runs-on: ${{ needs.plan.outputs.label }}
+    permissions:
+      contents: read
+    timeout-minutes: 90
+    steps:
+      - name: rb-probe
+        shell: bash
+        run: |
+          m=$(grep -m1 'model name' /proc/cpuinfo | cut -d: -f2 | xargs)
+          case "$m" in *EPYC*) fam="AMD EPYC";; *Ryzen*) fam="AMD Ryzen";; *Xeon*|*XEON*) fam="Intel Xeon";; *Intel*) fam="Intel";; *AMD*) fam="AMD";; *) fam="other";; esac
+          ghz=$(awk -F: '/cpu MHz/{printf "%.1f", $2/1000; exit}' /proc/cpuinfo)
+          echo "rb-probe cpu=\"$fam\" ghz=${ghz:-unknown} nproc=$(nproc) mem_kib=$(awk '/MemTotal/{print $2}' /proc/meminfo) swap_kib=$(awk '/SwapTotal/{print $2}' /proc/meminfo)"
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: mastodon/mastodon
+          ref: 3987b9fd624010eeeaeb7cad96606b05aa813f6a # v4.7.2
+          persist-credentials: false
+      - name: Prepare
+        run: echo "PLATFORM_PAIR=linux-amd64" >> $GITHUB_ENV
+      # PORTABILITY: the benchmark builds the same commit every run. To measure what a pull request
+      # build costs with a warm layer cache, each run changes one application file, as a real change
+      # would: dependency layers (system packages, libvips, ffmpeg, gems, node modules) can come from
+      # the cache, and everything after `COPY . /opt/mastodon/` rebuilds.
+      - name: Simulate a pull request change
+        run: echo "# benchmark run ${{ github.run_id }}" >> config/application.rb
+      - uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
+        id: buildx
+      # PORTABILITY: no registry login and no push (upstream's PR builds don't push either).
+      # The layer cache is upstream's own (type=gha, the PR workflow's cache: true).
+      - name: Build
+        uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8 # v6
+        with:
+          context: .
+          file: Dockerfile
+          build-args: |
+            MASTODON_VERSION_PRERELEASE=
+            MASTODON_VERSION_METADATA=
+            SOURCE_COMMIT=3987b9fd624010eeeaeb7cad96606b05aa813f6a
+          platforms: linux/amd64
+          provenance: false
+          push: false
+          outputs: type=cacheonly
+          cache-from: type=gha,scope=build-linux-amd64
+          cache-to: type=gha,mode=max,scope=build-linux-amd64
+
+  # Workload "pydantic": pydantic/pydantic@v2.13.5 (001dea020e0809844e5b17666432c9135a976f46)
+  # Adapted from upstream .github/workflows/ci.yml, job "Test ubuntu-latest / 3.13".
+  # Changes from the project's own job are marked PORTABILITY and are the same on every runner.
+  pydantic:
+    name: pydantic / ${{ needs.plan.outputs.label }} / rep ${{ needs.plan.outputs.rep }}
+    needs: [plan, mastodon]
+    if: ${{ !cancelled() && needs.plan.result == 'success' }}
+    runs-on: ${{ needs.plan.outputs.label }}
+    permissions:
+      contents: read
+    timeout-minutes: 45
+    env:
+      OS: ubuntu-latest
+      DEPS: yes
+      UV_PYTHON_PREFERENCE: only-managed
+    steps:
+      - name: rb-probe
+        shell: bash
+        run: |
+          m=$(grep -m1 'model name' /proc/cpuinfo | cut -d: -f2 | xargs)
+          case "$m" in *EPYC*) fam="AMD EPYC";; *Ryzen*) fam="AMD Ryzen";; *Xeon*|*XEON*) fam="Intel Xeon";; *Intel*) fam="Intel";; *AMD*) fam="AMD";; *) fam="other";; esac
+          ghz=$(awk -F: '/cpu MHz/{printf "%.1f", $2/1000; exit}' /proc/cpuinfo)
+          echo "rb-probe cpu=\"$fam\" ghz=${ghz:-unknown} nproc=$(nproc) mem_kib=$(awk '/MemTotal/{print $2}' /proc/meminfo) swap_kib=$(awk '/SwapTotal/{print $2}' /proc/meminfo)"
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: pydantic/pydantic
+          ref: 001dea020e0809844e5b17666432c9135a976f46 # v2.13.5
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@cec208311dfd045dd5311c1add060b2062131d57 # v8.0.0
+        with:
+          python-version: '3.13'
+          enable-cache: true
+      - name: Install dependencies
+        run: uv sync --all-packages --group testing-extra --all-extras
+      - run: 'uv run python -c "import pydantic.version; print(pydantic.version.version_info())"'
+      - run: mkdir coverage
+      - name: Run pytest
+        # PORTABILITY: GitHub's runner image sets a 16 MiB stack limit; stock Ubuntu (and other
+        # runner images) use 8 MiB, where upstream's recursion test overflows the stack.
+        run: |
+          ulimit -s 16384
+          make test NUM_THREADS=1
+        env:
+          COVERAGE_FILE: coverage/.coverage.Linux-py3.13
+          CONTEXT: Linux-py3.13-without-deps
+
+  # Workload "black": psf/black@26.5.1 (87928e6d6761a4a6d22250e1fee5601b3998086e)
+  # Adapted from upstream .github/workflows/test.yml, job "test (3.13, ubuntu-latest)".
+  # Changes from the project's own job are marked PORTABILITY and are the same on every runner.
+  black:
+    name: black / ${{ needs.plan.outputs.label }} / rep ${{ needs.plan.outputs.rep }}
+    needs: [plan, pydantic]
+    if: ${{ !cancelled() && needs.plan.result == 'success' }}
+    runs-on: ${{ needs.plan.outputs.label }}
+    permissions:
+      contents: read
+    timeout-minutes: 30
+    steps:
+      - name: rb-probe
+        shell: bash
+        run: |
+          m=$(grep -m1 'model name' /proc/cpuinfo | cut -d: -f2 | xargs)
+          case "$m" in *EPYC*) fam="AMD EPYC";; *Ryzen*) fam="AMD Ryzen";; *Xeon*|*XEON*) fam="Intel Xeon";; *Intel*) fam="Intel";; *AMD*) fam="AMD";; *) fam="other";; esac
+          ghz=$(awk -F: '/cpu MHz/{printf "%.1f", $2/1000; exit}' /proc/cpuinfo)
+          echo "rb-probe cpu=\"$fam\" ghz=${ghz:-unknown} nproc=$(nproc) mem_kib=$(awk '/MemTotal/{print $2}' /proc/meminfo) swap_kib=$(awk '/SwapTotal/{print $2}' /proc/meminfo)"
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: psf/black
+          ref: 87928e6d6761a4a6d22250e1fee5601b3998086e # 26.5.1
+          persist-credentials: false
+      - name: Set up Python 3.13
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+        with:
+          python-version: '3.13'
+          allow-prereleases: true
+          pip-version: "25.3"
+          pip-install: --group tox
+      - name: Unit tests
+        run: tox -e ci-py313 -- -v --color=yes
+
+  # Workload "vue": vuejs/core@v3.5.43 (5be58b4c475c1d14b4abacbfeda610394a0ee4e5)
+  # Adapted from upstream .github/workflows/test.yml, job "unit-test".
+  # Changes from the project's own job are marked PORTABILITY and are the same on every runner.
+  vue:
+    name: vue / ${{ needs.plan.outputs.label }} / rep ${{ needs.plan.outputs.rep }}
+    needs: [plan, black]
+    if: ${{ !cancelled() && needs.plan.result == 'success' }}
+    runs-on: ${{ needs.plan.outputs.label }}
+    permissions:
+      contents: read
+    timeout-minutes: 30
+    env:
+      PUPPETEER_SKIP_DOWNLOAD: 'true'
+    steps:
+      - name: rb-probe
+        shell: bash
+        run: |
+          m=$(grep -m1 'model name' /proc/cpuinfo | cut -d: -f2 | xargs)
+          case "$m" in *EPYC*) fam="AMD EPYC";; *Ryzen*) fam="AMD Ryzen";; *Xeon*|*XEON*) fam="Intel Xeon";; *Intel*) fam="Intel";; *AMD*) fam="AMD";; *) fam="other";; esac
+          ghz=$(awk -F: '/cpu MHz/{printf "%.1f", $2/1000; exit}' /proc/cpuinfo)
+          echo "rb-probe cpu=\"$fam\" ghz=${ghz:-unknown} nproc=$(nproc) mem_kib=$(awk '/MemTotal/{print $2}' /proc/meminfo) swap_kib=$(awk '/SwapTotal/{print $2}' /proc/meminfo)"
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: vuejs/core
+          ref: 5be58b4c475c1d14b4abacbfeda610394a0ee4e5 # v3.5.43
+          persist-credentials: false
+      # PORTABILITY: set up Node before pnpm, so pnpm's installer never runs on a runner image's
+      # own (possibly older) Node. The second setup-node call is upstream's (with the pnpm cache).
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: '.node-version'
+      - name: Install pnpm
+        uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+      - name: Install Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: '.node-version'
+          cache: 'pnpm'
+      - run: pnpm install
+      - name: Run unit tests
+        run: pnpm run test-unit
+
+  # Workload "fd": sharkdp/fd@v10.5.0 (4f81778774463bf414a184cbe6d5219ad2229646)
+  # Adapted from upstream .github/workflows/CICD.yml, job "x86_64-unknown-linux-gnu (ubuntu-24.04)".
+  # Changes from the project's own job are marked PORTABILITY and are the same on every runner.
+  fd:
+    name: fd / ${{ needs.plan.outputs.label }} / rep ${{ needs.plan.outputs.rep }}
+    needs: [plan, vue]
+    if: ${{ !cancelled() && needs.plan.result == 'success' }}
+    runs-on: ${{ needs.plan.outputs.label }}
+    permissions:
+      contents: read
+    timeout-minutes: 45
+    env:
+      # PORTABILITY: upstream builds this target with cross (a Docker-based wrapper); on an x86_64
+      # host the native cargo build of the same target is equivalent and needs no Docker.
+      BUILD_CMD: cargo
+      target: x86_64-unknown-linux-gnu
+    steps:
+      - name: rb-probe
+        shell: bash
+        run: |
+          m=$(grep -m1 'model name' /proc/cpuinfo | cut -d: -f2 | xargs)
+          case "$m" in *EPYC*) fam="AMD EPYC";; *Ryzen*) fam="AMD Ryzen";; *Xeon*|*XEON*) fam="Intel Xeon";; *Intel*) fam="Intel";; *AMD*) fam="AMD";; *) fam="other";; esac
+          ghz=$(awk -F: '/cpu MHz/{printf "%.1f", $2/1000; exit}' /proc/cpuinfo)
+          echo "rb-probe cpu=\"$fam\" ghz=${ghz:-unknown} nproc=$(nproc) mem_kib=$(awk '/MemTotal/{print $2}' /proc/meminfo) swap_kib=$(awk '/SwapTotal/{print $2}' /proc/meminfo)"
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: sharkdp/fd
+          ref: 4f81778774463bf414a184cbe6d5219ad2229646 # v10.5.0
+          persist-credentials: false
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@39008827e6b4319a349e9a42dfc90579dd25f1ca # stable
+        with:
+          targets: x86_64-unknown-linux-gnu
+          toolchain: "stable"
+      - name: Show version information (Rust, cargo, GCC)
+        shell: bash
+        run: |
+          gcc --version || true
+          rustup -V
+          cargo -V
+          rustc -V
+      - name: Build
+        shell: bash
+        run: $BUILD_CMD build --locked --release --target="${target}"
+      - name: Run tests
+        shell: bash
+        run: $BUILD_CMD test --locked --target="${target}"
+
+  # Workload "flask": pallets/flask@3.1.3 (22d924701a6ae2e4cd01e9a15bbaf3946094af65)
+  # Adapted from upstream .github/workflows/tests.yaml, job "tests (3.13)".
+  # Changes from the project's own job are marked PORTABILITY and are the same on every runner.
+  flask:
+    name: flask / ${{ needs.plan.outputs.label }} / rep ${{ needs.plan.outputs.rep }}
+    needs: [plan, fd]
+    if: ${{ !cancelled() && needs.plan.result == 'success' }}
+    runs-on: ${{ needs.plan.outputs.label }}
+    permissions:
+      contents: read
+    timeout-minutes: 30
+    steps:
+      - name: rb-probe
+        shell: bash
+        run: |
+          m=$(grep -m1 'model name' /proc/cpuinfo | cut -d: -f2 | xargs)
+          case "$m" in *EPYC*) fam="AMD EPYC";; *Ryzen*) fam="AMD Ryzen";; *Xeon*|*XEON*) fam="Intel Xeon";; *Intel*) fam="Intel";; *AMD*) fam="AMD";; *) fam="other";; esac
+          ghz=$(awk -F: '/cpu MHz/{printf "%.1f", $2/1000; exit}' /proc/cpuinfo)
+          echo "rb-probe cpu=\"$fam\" ghz=${ghz:-unknown} nproc=$(nproc) mem_kib=$(awk '/MemTotal/{print $2}' /proc/meminfo) swap_kib=$(awk '/SwapTotal/{print $2}' /proc/meminfo)"
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: pallets/flask
+          ref: 22d924701a6ae2e4cd01e9a15bbaf3946094af65 # 3.1.3
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@61cb8a9741eeb8a550a1b8544337180c0fc8476b # v7.2.0
+        with:
+          enable-cache: true
+          prune-cache: false
+      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+        with:
+          python-version: '3.13'
+      - run: uv run --locked tox run -e py3.13

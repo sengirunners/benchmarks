@@ -1,0 +1,48 @@
+# Hardware record for one runner class: CPU model, vCPU count, memory, disk, and a short CPU
+# benchmark (sysbench). Not part of the timing results.
+name: hw
+run-name: hw ${{ inputs.runner }} rep ${{ inputs.rep }}
+on:
+  workflow_dispatch:
+    inputs:
+      runner:
+        description: runs-on label of the runner class
+        type: choice
+        options:
+          - ubuntu-latest
+          - sengi-basic-2-ubuntu-2404
+          - sengi-premium-2-ubuntu-2404
+          - sengi-basic-4-ubuntu-2404
+          - sengi-premium-4-ubuntu-2404
+      rep:
+        description: label shown in the run and job names
+        type: string
+        required: true
+permissions:
+  contents: read
+jobs:
+  hw:
+    name: hw / ${{ inputs.runner }} / rep ${{ inputs.rep }}
+    runs-on: ${{ inputs.runner }}
+    permissions:
+      contents: read
+    timeout-minutes: 10
+    steps:
+      - name: rb-probe
+        shell: bash
+        run: |
+          m=$(grep -m1 'model name' /proc/cpuinfo | cut -d: -f2 | xargs)
+          case "$m" in *EPYC*) fam="AMD EPYC";; *Ryzen*) fam="AMD Ryzen";; *Xeon*|*XEON*) fam="Intel Xeon";; *Intel*) fam="Intel";; *AMD*) fam="AMD";; *) fam="other";; esac
+          ghz=$(awk -F: '/cpu MHz/{printf "%.1f", $2/1000; exit}' /proc/cpuinfo)
+          echo "rb-probe cpu=\"$fam\" ghz=${ghz:-unknown} nproc=$(nproc) mem_kib=$(awk '/MemTotal/{print $2}' /proc/meminfo) swap_kib=$(awk '/SwapTotal/{print $2}' /proc/meminfo)"
+      - name: lscpu
+        run: |
+          echo "hw-model=$(lscpu | sed -n 's/^Model name:[[:space:]]*//p' | head -1)"
+          lscpu; nproc; free -g; df -h /; uname -a
+      - name: install sysbench
+        run: sudo apt-get install -y -qq sysbench >/dev/null 2>&1 || (sudo apt-get update -qq && sudo apt-get install -y -qq sysbench)
+      - name: sysbench
+        run: |
+          st=$(sysbench cpu --threads=1 --time=20 run | awk '/events per second/{print $4}')
+          mt=$(sysbench cpu --threads=$(nproc) --time=20 run | awk '/events per second/{print $4}')
+          echo "hw-sysbench st=$st mt=$mt nproc=$(nproc)"

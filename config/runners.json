@@ -1,0 +1,40 @@
+{
+  "runners": [
+    {
+      "key": "github",
+      "label": "ubuntu-latest",
+      "name": "GitHub-hosted",
+      "tier": "github"
+    },
+    {
+      "key": "basic-2",
+      "label": "sengi-basic-2-ubuntu-2404",
+      "name": "Sengi Basic",
+      "tier": "basic"
+    },
+    {
+      "key": "premium-2",
+      "label": "sengi-premium-2-ubuntu-2404",
+      "name": "Sengi Premium",
+      "tier": "premium"
+    },
+    {
+      "key": "basic-4",
+      "label": "sengi-basic-4-ubuntu-2404",
+      "name": "Sengi Basic",
+      "tier": "basic"
+    },
+    {
+      "key": "premium-4",
+      "label": "sengi-premium-4-ubuntu-2404",
+      "name": "Sengi Premium",
+      "tier": "premium"
+    }
+  ],
+  "price_source": "https://sengi.run/data/cheapest-github-actions-runners.json",
+  "price_rows": {
+    "github": "GitHub-hosted",
+    "basic": "Sengi Basic",
+    "premium": "Sengi Premium"
+  }
+}

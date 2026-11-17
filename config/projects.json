@@ -1,0 +1,112 @@
+{
+  "projects": [
+    {
+      "key": "black",
+      "name": "Black",
+      "repo": "psf/black",
+      "commit": "87928e6d6761a4a6d22250e1fee5601b3998086e",
+      "release": "26.5.1",
+      "language": "Python",
+      "what_runs": "Python 3.13 test suite (tox)"
+    },
+    {
+      "key": "cli",
+      "name": "GitHub CLI",
+      "repo": "cli/cli",
+      "commit": "fc4b137cdef0a6bd28fd461b7cf9c84a5812a8cd",
+      "release": "v2.102.0",
+      "language": "Go",
+      "what_runs": "Unit and integration tests with the race detector, then a build"
+    },
+    {
+      "key": "codex",
+      "name": "Codex CLI",
+      "repo": "openai/codex",
+      "commit": "01fc69f4026735edfdf6789820549727a4867b11",
+      "release": "rust-v0.159.3",
+      "language": "Rust",
+      "what_runs": "cargo clippy over the Rust workspace, tests included"
+    },
+    {
+      "key": "mastodon",
+      "name": "Mastodon",
+      "repo": "mastodon/mastodon",
+      "commit": "3987b9fd624010eeeaeb7cad96606b05aa813f6a",
+      "release": "v4.7.2",
+      "language": "Docker",
+      "what_runs": "Docker image build (linux/amd64) after a one-file change, layer cache on"
+    },
+    {
+      "key": "flask",
+      "name": "Flask",
+      "repo": "pallets/flask",
+      "commit": "22d924701a6ae2e4cd01e9a15bbaf3946094af65",
+      "release": "3.1.3",
+      "language": "Python",
+      "what_runs": "Python 3.13 test suite (tox)"
+    },
+    {
+      "key": "guava",
+      "name": "Guava",
+      "repo": "google/guava",
+      "commit": "666338cc49d5686c07e3e4d17f0aa1cec25a2be6",
+      "release": "v33.7.2",
+      "language": "Java",
+      "what_runs": "Maven install and verify on JDK 25"
+    },
+    {
+      "key": "vercel-ai",
+      "name": "AI SDK",
+      "repo": "vercel/ai",
+      "commit": "45e1fbc3ea10d22f852e12b1c1851e289c85e835",
+      "release": "ai@7.0.126",
+      "language": "TypeScript",
+      "what_runs": "Turborepo build of three Next.js examples"
+    },
+    {
+      "key": "pydantic",
+      "name": "Pydantic",
+      "repo": "pydantic/pydantic",
+      "commit": "001dea020e0809844e5b17666432c9135a976f46",
+      "release": "v2.13.5",
+      "language": "Python",
+      "what_runs": "pytest suite on Python 3.13"
+    },
+    {
+      "key": "typescript",
+      "name": "TypeScript",
+      "repo": "microsoft/TypeScript",
+      "commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "release": "v6.0.3",
+      "language": "TypeScript",
+      "what_runs": "Compiler test suite on Node 24"
+    },
+    {
+      "key": "vite",
+      "name": "Vite",
+      "repo": "vitejs/vite",
+      "commit": "39ddf7ccf7e7469ff6a3ba37bca38c32ea804d6e",
+      "release": "v8.3.1",
+      "language": "TypeScript",
+      "what_runs": "Build, unit tests and Playwright end-to-end tests on Node 24"
+    },
+    {
+      "key": "vue",
+      "name": "Vue",
+      "repo": "vuejs/core",
+      "commit": "5be58b4c475c1d14b4abacbfeda610394a0ee4e5",
+      "release": "v3.5.43",
+      "language": "TypeScript",
+      "what_runs": "Unit tests (Vitest)"
+    },
+    {
+      "key": "fd",
+      "name": "fd",
+      "repo": "sharkdp/fd",
+      "commit": "4f81778774463bf414a184cbe6d5219ad2229646",
+      "release": "v10.5.0",
+      "language": "Rust",
+      "what_runs": "cargo build --release, then cargo test"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+sengirunners/benchmarks
+Copyright 2026 Sengi, Inc.
+
+The project jobs in .github/workflows/bench.yml and the hardware job in .github/workflows/hw.yml
+are adapted from an open-source GitHub Actions runner benchmark suite, licensed under the Apache
+License, Version 2.0, which carries this notice:
+
+   Copyright 2026 Vitko Inc.
+
+Changes made here: the jobs were gathered into one workflow with a choice of runner class and four
+lanes; steps and inputs that only enabled one vendor's optional features (cache sidecars, layer-cache
+builders, warm starts and split test runs) were removed; one unpinned action was pinned to a commit.
+The commands that build and test each project are unchanged.
+
+Each job is in turn adapted from the named project's own CI workflow, at the commit given in the job.
+The projects are named only to identify the code that was built; none of them is affiliated with or
+endorses this benchmark.

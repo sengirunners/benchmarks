@@ -1,0 +1,5 @@
+{
+  "note": "Runs or jobs left out by hand, by id, each with its reason. Automatic exclusions (warm-up and pilot runs, failed or cancelled jobs, a machine of the wrong size) are added by scripts/collect.py.",
+  "runs": {},
+  "jobs": {}
+}
