@@ -13,7 +13,8 @@ store it writes:
 - results/results.csv: one row per job, the excluded ones included, with the reason.
 
 A job counts only if it succeeded, is not from a warm-up or pilot run, ran on a machine of its class's
-size, and is not excluded by hand in config/exclusions.json. Failed and timed-out jobs are listed and
+size, recorded its runner priority (a Sengi job must say "customer"), and is not excluded by hand in
+config/exclusions.json. Failed and timed-out jobs are listed and
 counted as failures. Time is the job's run time (start to end); queue time is kept apart.
 """
 import csv
@@ -36,7 +37,7 @@ RESULTS = ROOT / "results"
 STORE = RESULTS / "jobs.json"
 NOT_MEASURED_REPS = {"warmup": "warm-up run: fills each runner's dependency caches first; not measured",
                      "pilot": "pilot run: checks the workflows; not measured"}
-PROBE = re.compile(r'rb-probe cpu="([^"]*)" ghz=(\S+) nproc=(\d+) mem_kib=(\d+)')
+PROBE = re.compile(r'rb-probe cpu="([^"]*)" ghz=(\S+) nproc=(\d+) mem_kib=(\d+)(?: swap_kib=\S+ priority=(\S+))?')
 MIN_RUNS = 3
 
 
@@ -72,7 +73,7 @@ def probe(row):
     if row["conclusion"] in ("success", "failure", "timed_out") and row["started_at"]:
         m = PROBE.search(job_log(row["job_id"]))
         if m:
-            row.update(cpu=m.group(1), nproc=int(m.group(3)), mem_kib=int(m.group(4)))
+            row.update(cpu=m.group(1), nproc=int(m.group(3)), mem_kib=int(m.group(4)), priority=m.group(5))
 
 
 def ts(value):
@@ -98,7 +99,7 @@ def read_run(run):
             "seconds": secs(job["started_at"], job["completed_at"]),
             "queue_s": secs(job["created_at"], job["started_at"]),
             "runner_name": job.get("runner_name"),
-            "cpu": None, "nproc": None, "mem_kib": None,
+            "cpu": None, "nproc": None, "mem_kib": None, "priority": None,
         }
         probe(row)
         rows.append(row)
@@ -155,6 +156,13 @@ def main():
             reason = f"runner {row['label']} is not in config/runners.json"
         if not reason and row["project"] not in pkeys:
             reason = f"project {row['project']} is not in config/projects.json"
+        # Sengi jobs must run at the priority a paying customer gets (SENGI_RUNNER_PRIORITY, written by
+        # Sengi's runner setup). Jobs from before the probe recorded it are not comparable: the Sengi
+        # ones ran at internal priority, and all of them ran a different bench.yml.
+        if not reason and row["conclusion"] in ("success", "failure") and row.get("priority") is None:
+            reason = "recorded before the customer-priority check; not measured"
+        if not reason and row["label"].startswith("sengi-") and row.get("priority") not in (None, "customer"):
+            reason = f"Sengi job not at customer priority (SENGI_RUNNER_PRIORITY={row['priority']}); not measured"
         if not reason and row["conclusion"] in ("failure", "timed_out"):
             reason = f"job {row['conclusion'].replace('_', ' ')}"
         if not reason and row["conclusion"] != "success":

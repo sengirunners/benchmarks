@@ -43,6 +43,11 @@ example, a stock Ubuntu image needs a few system packages that GitHub's image al
   (GitHub's `ubuntu-latest` has moved to a newer Ubuntu, so it is not used). Every
   job records the vCPU count, CPU and memory it ran on (the `rb-probe` step); the results print the
   measured vCPU count, not a nominal one.
+- **Customer priority.** Sengi jobs must run at the priority a paying customer gets. Sengi's runner
+  setup tells each job its priority (`SENGI_RUNNER_PRIORITY`, `customer` or `internal`); this
+  repository's GitHub account is Sengi's own, whose jobs run at internal priority unless Sengi lists
+  the repository to run as a customer. The `rb-probe` step records the priority and fails any Sengi
+  job that is not at `customer`, and jobs recorded before this check (2026-11-19) are not measured.
 - **One run = one runner class x all twelve projects.** The jobs run in four lanes, so at most four
   run at once. Runner classes are run one at a time, never together.
 - **Warm-up.** Each runner class first does one warm-up run that fills its dependency caches, as a
