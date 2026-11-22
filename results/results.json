@@ -1,9 +1,9 @@
 {
  "page": "https://sengi.run/benchmarks",
- "measured": "2026-11-20",
- "last_checked": "2026-11-20",
+ "measured": "2026-11-22",
+ "last_checked": "2026-11-22",
  "bench_repo": "sengirunners/benchmarks",
- "bench_commit": "72f595ad579fddc927c80a5247cf0b90af98fdc4",
+ "bench_commit": "df58c01a8c3fa237c9903327dcde159b06c7c6bc",
  "method": {
   "time": "Job run time, start to end, from the GitHub API. Queue time is kept apart.",
   "runs": "Median of the measured runs, with n, min and max; a median needs n >= 3.",
@@ -12,7 +12,7 @@
   "order": "One runner class at a time; at most four jobs at once within a run. One warm-up run per class first fills dependency caches.",
   "selection": "The project list is the whole workload list of an existing open-source CI benchmark suite, adopted before running it here. Each project is pinned to a release commit.",
   "exclusions": "Every run is listed. A job is left out of the medians only for the reason given next to it.",
-  "dates": "2026-11-19 to 2026-11-20"
+  "dates": "2026-11-19 to 2026-11-22"
  },
  "runners": [
   {
@@ -158,22 +158,22 @@
   {
    "project": "black",
    "runner": "github",
-   "runs": 3,
+   "runs": 7,
    "failures": 0,
-   "median_s": 95,
+   "median_s": 99,
    "min_s": 89,
-   "max_s": 99,
-   "median_queue_s": 3,
+   "max_s": 137,
+   "median_queue_s": 2,
    "median_billed_minutes": 2,
    "median_cost_usd": 0.024
   },
   {
    "project": "black",
    "runner": "basic-2",
-   "runs": 3,
+   "runs": 7,
    "failures": 0,
-   "median_s": 118,
-   "min_s": 106,
+   "median_s": 106,
+   "min_s": 98,
    "max_s": 144,
    "median_queue_s": 11,
    "median_billed_minutes": 2,
@@ -182,22 +182,22 @@
   {
    "project": "black",
    "runner": "premium-2",
-   "runs": 3,
+   "runs": 7,
    "failures": 0,
    "median_s": 77,
    "min_s": 75,
    "max_s": 85,
-   "median_queue_s": 9,
+   "median_queue_s": 8,
    "median_billed_minutes": 2,
    "median_cost_usd": 0.006
   },
   {
    "project": "black",
    "runner": "basic-4",
-   "runs": 3,
+   "runs": 7,
    "failures": 0,
-   "median_s": 84,
-   "min_s": 72,
+   "median_s": 69,
+   "min_s": 65,
    "max_s": 86,
    "median_queue_s": 10,
    "median_billed_minutes": 2,
@@ -206,10 +206,10 @@
   {
    "project": "black",
    "runner": "premium-4",
-   "runs": 3,
+   "runs": 6,
    "failures": 0,
-   "median_s": 55,
-   "min_s": 52,
+   "median_s": 53,
+   "min_s": 51,
    "max_s": 58,
    "median_queue_s": 9,
    "median_billed_minutes": 1,
@@ -218,11 +218,11 @@
   {
    "project": "cli",
    "runner": "github",
-   "runs": 3,
+   "runs": 7,
    "failures": 0,
    "median_s": 197,
-   "min_s": 182,
-   "max_s": 200,
+   "min_s": 176,
+   "max_s": 210,
    "median_queue_s": 2,
    "median_billed_minutes": 4,
    "median_cost_usd": 0.048
@@ -230,23 +230,23 @@
   {
    "project": "cli",
    "runner": "basic-2",
-   "runs": 3,
+   "runs": 7,
    "failures": 0,
-   "median_s": 355,
-   "min_s": 354,
+   "median_s": 332,
+   "min_s": 308,
    "max_s": 362,
-   "median_queue_s": 12,
+   "median_queue_s": 11,
    "median_billed_minutes": 6,
    "median_cost_usd": 0.006
   },
   {
    "project": "cli",
    "runner": "premium-2",
-   "runs": 3,
+   "runs": 7,
    "failures": 0,
-   "median_s": 299,
-   "min_s": 285,
-   "max_s": 300,
+   "median_s": 296,
+   "min_s": 279,
+   "max_s": 305,
    "median_queue_s": 10,
    "median_billed_minutes": 5,
    "median_cost_usd": 0.015
@@ -254,23 +254,23 @@
   {
    "project": "cli",
    "runner": "basic-4",
-   "runs": 3,
+   "runs": 7,
    "failures": 0,
    "median_s": 170,
-   "min_s": 166,
-   "max_s": 171,
-   "median_queue_s": 10,
+   "min_s": 153,
+   "max_s": 185,
+   "median_queue_s": 11,
    "median_billed_minutes": 3,
    "median_cost_usd": 0.006
   },
   {
    "project": "cli",
    "runner": "premium-4",
-   "runs": 3,
+   "runs": 6,
    "failures": 0,
    "median_s": 144,
    "min_s": 143,
-   "max_s": 156,
+   "max_s": 157,
    "median_queue_s": 10,
    "median_billed_minutes": 3,
    "median_cost_usd": 0.018
@@ -278,35 +278,35 @@
   {
    "project": "codex",
    "runner": "github",
-   "runs": 3,
+   "runs": 7,
    "failures": 0,
-   "median_s": 431,
-   "min_s": 394,
+   "median_s": 394,
+   "min_s": 353,
    "max_s": 456,
    "median_queue_s": 2,
-   "median_billed_minutes": 8,
-   "median_cost_usd": 0.096
+   "median_billed_minutes": 7,
+   "median_cost_usd": 0.084
   },
   {
    "project": "codex",
    "runner": "basic-2",
-   "runs": 3,
+   "runs": 7,
    "failures": 0,
-   "median_s": 730,
+   "median_s": 662,
    "min_s": 554,
    "max_s": 839,
-   "median_queue_s": 14,
-   "median_billed_minutes": 13,
-   "median_cost_usd": 0.013
+   "median_queue_s": 11,
+   "median_billed_minutes": 12,
+   "median_cost_usd": 0.012
   },
   {
    "project": "codex",
    "runner": "premium-2",
-   "runs": 3,
+   "runs": 7,
    "failures": 0,
-   "median_s": 476,
-   "min_s": 451,
-   "max_s": 499,
+   "median_s": 451,
+   "min_s": 432,
+   "max_s": 507,
    "median_queue_s": 10,
    "median_billed_minutes": 8,
    "median_cost_usd": 0.024
@@ -314,22 +314,22 @@
   {
    "project": "codex",
    "runner": "basic-4",
-   "runs": 3,
+   "runs": 7,
    "failures": 0,
-   "median_s": 448,
+   "median_s": 385,
    "min_s": 346,
-   "max_s": 475,
+   "max_s": 478,
    "median_queue_s": 10,
-   "median_billed_minutes": 8,
-   "median_cost_usd": 0.016
+   "median_billed_minutes": 7,
+   "median_cost_usd": 0.014
   },
   {
    "project": "codex",
    "runner": "premium-4",
-   "runs": 3,
+   "runs": 6,
    "failures": 0,
-   "median_s": 290,
-   "min_s": 273,
+   "median_s": 289.5,
+   "min_s": 263,
    "max_s": 317,
    "median_queue_s": 10,
    "median_billed_minutes": 5,
@@ -338,11 +338,11 @@
   {
    "project": "mastodon",
    "runner": "github",
-   "runs": 3,
+   "runs": 7,
    "failures": 0,
-   "median_s": 175,
-   "min_s": 165,
-   "max_s": 178,
+   "median_s": 165,
+   "min_s": 119,
+   "max_s": 193,
    "median_queue_s": 2,
    "median_billed_minutes": 3,
    "median_cost_usd": 0.036
@@ -350,21 +350,21 @@
   {
    "project": "mastodon",
    "runner": "basic-2",
-   "runs": 3,
+   "runs": 7,
    "failures": 0,
-   "median_s": 171,
-   "min_s": 165,
+   "median_s": 165,
+   "min_s": 140,
    "max_s": 200,
-   "median_queue_s": 10,
+   "median_queue_s": 11,
    "median_billed_minutes": 3,
    "median_cost_usd": 0.003
   },
   {
    "project": "mastodon",
    "runner": "premium-2",
-   "runs": 3,
+   "runs": 7,
    "failures": 0,
-   "median_s": 127,
+   "median_s": 123,
    "min_s": 118,
    "max_s": 154,
    "median_queue_s": 10,
@@ -374,10 +374,10 @@
   {
    "project": "mastodon",
    "runner": "basic-4",
-   "runs": 3,
+   "runs": 7,
    "failures": 0,
    "median_s": 124,
-   "min_s": 117,
+   "min_s": 111,
    "max_s": 146,
    "median_queue_s": 10,
    "median_billed_minutes": 3,
@@ -386,23 +386,23 @@
   {
    "project": "mastodon",
    "runner": "premium-4",
-   "runs": 3,
+   "runs": 6,
    "failures": 0,
-   "median_s": 104,
+   "median_s": 105.5,
    "min_s": 100,
-   "max_s": 107,
-   "median_queue_s": 8,
+   "max_s": 113,
+   "median_queue_s": 9.5,
    "median_billed_minutes": 2,
    "median_cost_usd": 0.012
   },
   {
    "project": "flask",
    "runner": "github",
-   "runs": 3,
+   "runs": 7,
    "failures": 0,
-   "median_s": 17,
+   "median_s": 18,
    "min_s": 14,
-   "max_s": 18,
+   "max_s": 23,
    "median_queue_s": 2,
    "median_billed_minutes": 1,
    "median_cost_usd": 0.012
@@ -410,22 +410,22 @@
   {
    "project": "flask",
    "runner": "basic-2",
-   "runs": 3,
+   "runs": 7,
    "failures": 0,
-   "median_s": 18,
-   "min_s": 17,
+   "median_s": 15,
+   "min_s": 13,
    "max_s": 18,
-   "median_queue_s": 12,
+   "median_queue_s": 11,
    "median_billed_minutes": 1,
    "median_cost_usd": 0.001
   },
   {
    "project": "flask",
    "runner": "premium-2",
-   "runs": 3,
+   "runs": 7,
    "failures": 0,
    "median_s": 11,
-   "min_s": 10,
+   "min_s": 9,
    "max_s": 13,
    "median_queue_s": 10,
    "median_billed_minutes": 1,
@@ -434,22 +434,22 @@
   {
    "project": "flask",
    "runner": "basic-4",
-   "runs": 3,
+   "runs": 7,
    "failures": 0,
-   "median_s": 16,
-   "min_s": 15,
-   "max_s": 16,
-   "median_queue_s": 11,
+   "median_s": 15,
+   "min_s": 13,
+   "max_s": 17,
+   "median_queue_s": 10,
    "median_billed_minutes": 1,
    "median_cost_usd": 0.002
   },
   {
    "project": "flask",
    "runner": "premium-4",
-   "runs": 3,
+   "runs": 6,
    "failures": 0,
-   "median_s": 13,
-   "min_s": 11,
+   "median_s": 12,
+   "min_s": 9,
    "max_s": 13,
    "median_queue_s": 10,
    "median_billed_minutes": 1,
@@ -458,11 +458,11 @@
   {
    "project": "guava",
    "runner": "github",
-   "runs": 3,
+   "runs": 7,
    "failures": 0,
    "median_s": 729,
-   "min_s": 725,
-   "max_s": 732,
+   "min_s": 685,
+   "max_s": 742,
    "median_queue_s": 2,
    "median_billed_minutes": 13,
    "median_cost_usd": 0.156
@@ -470,47 +470,47 @@
   {
    "project": "guava",
    "runner": "basic-2",
-   "runs": 3,
+   "runs": 7,
    "failures": 0,
-   "median_s": 903,
-   "min_s": 883,
+   "median_s": 883,
+   "min_s": 865,
    "max_s": 1030,
-   "median_queue_s": 13,
-   "median_billed_minutes": 16,
-   "median_cost_usd": 0.016
+   "median_queue_s": 12,
+   "median_billed_minutes": 15,
+   "median_cost_usd": 0.015
   },
   {
    "project": "guava",
    "runner": "premium-2",
-   "runs": 3,
+   "runs": 7,
    "failures": 0,
-   "median_s": 686,
+   "median_s": 673,
    "min_s": 667,
-   "max_s": 709,
-   "median_queue_s": 10,
+   "max_s": 711,
+   "median_queue_s": 11,
    "median_billed_minutes": 12,
    "median_cost_usd": 0.036
   },
   {
    "project": "guava",
    "runner": "basic-4",
-   "runs": 3,
+   "runs": 7,
    "failures": 0,
-   "median_s": 794,
-   "min_s": 683,
+   "median_s": 737,
+   "min_s": 663,
    "max_s": 800,
    "median_queue_s": 11,
-   "median_billed_minutes": 14,
-   "median_cost_usd": 0.028
+   "median_billed_minutes": 13,
+   "median_cost_usd": 0.026
   },
   {
    "project": "guava",
    "runner": "premium-4",
-   "runs": 3,
+   "runs": 6,
    "failures": 0,
-   "median_s": 615,
-   "min_s": 612,
-   "max_s": 628,
+   "median_s": 621.5,
+   "min_s": 595,
+   "max_s": 645,
    "median_queue_s": 10,
    "median_billed_minutes": 11,
    "median_cost_usd": 0.066
@@ -518,11 +518,11 @@
   {
    "project": "vercel-ai",
    "runner": "github",
-   "runs": 3,
+   "runs": 7,
    "failures": 0,
-   "median_s": 191,
+   "median_s": 220,
    "min_s": 188,
-   "max_s": 220,
+   "max_s": 223,
    "median_queue_s": 2,
    "median_billed_minutes": 4,
    "median_cost_usd": 0.048
@@ -530,59 +530,59 @@
   {
    "project": "vercel-ai",
    "runner": "basic-2",
-   "runs": 3,
+   "runs": 7,
    "failures": 0,
-   "median_s": 320,
-   "min_s": 285,
+   "median_s": 259,
+   "min_s": 207,
    "max_s": 333,
    "median_queue_s": 13,
-   "median_billed_minutes": 6,
-   "median_cost_usd": 0.006
+   "median_billed_minutes": 5,
+   "median_cost_usd": 0.005
   },
   {
    "project": "vercel-ai",
    "runner": "premium-2",
-   "runs": 3,
+   "runs": 7,
    "failures": 0,
-   "median_s": 182,
-   "min_s": 172,
+   "median_s": 172,
+   "min_s": 167,
    "max_s": 193,
    "median_queue_s": 10,
-   "median_billed_minutes": 4,
-   "median_cost_usd": 0.012
+   "median_billed_minutes": 3,
+   "median_cost_usd": 0.009
   },
   {
    "project": "vercel-ai",
    "runner": "basic-4",
-   "runs": 3,
+   "runs": 7,
    "failures": 0,
-   "median_s": 183,
-   "min_s": 169,
+   "median_s": 150,
+   "min_s": 135,
    "max_s": 207,
    "median_queue_s": 10,
-   "median_billed_minutes": 4,
-   "median_cost_usd": 0.008
+   "median_billed_minutes": 3,
+   "median_cost_usd": 0.006
   },
   {
    "project": "vercel-ai",
    "runner": "premium-4",
-   "runs": 3,
+   "runs": 6,
    "failures": 0,
-   "median_s": 128,
+   "median_s": 131.5,
    "min_s": 110,
-   "max_s": 135,
-   "median_queue_s": 11,
+   "max_s": 144,
+   "median_queue_s": 10.5,
    "median_billed_minutes": 3,
    "median_cost_usd": 0.018
   },
   {
    "project": "pydantic",
    "runner": "github",
-   "runs": 3,
+   "runs": 7,
    "failures": 0,
    "median_s": 129,
-   "min_s": 126,
-   "max_s": 129,
+   "min_s": 122,
+   "max_s": 150,
    "median_queue_s": 2,
    "median_billed_minutes": 3,
    "median_cost_usd": 0.036
@@ -590,10 +590,10 @@
   {
    "project": "pydantic",
    "runner": "basic-2",
-   "runs": 3,
+   "runs": 7,
    "failures": 0,
-   "median_s": 144,
-   "min_s": 134,
+   "median_s": 134,
+   "min_s": 109,
    "max_s": 151,
    "median_queue_s": 11,
    "median_billed_minutes": 3,
@@ -602,10 +602,10 @@
   {
    "project": "pydantic",
    "runner": "premium-2",
-   "runs": 3,
+   "runs": 7,
    "failures": 0,
    "median_s": 100,
-   "min_s": 97,
+   "min_s": 91,
    "max_s": 105,
    "median_queue_s": 9,
    "median_billed_minutes": 2,
@@ -614,11 +614,11 @@
   {
    "project": "pydantic",
    "runner": "basic-4",
-   "runs": 3,
+   "runs": 7,
    "failures": 0,
    "median_s": 115,
    "min_s": 97,
-   "max_s": 127,
+   "max_s": 131,
    "median_queue_s": 10,
    "median_billed_minutes": 2,
    "median_cost_usd": 0.004
@@ -626,11 +626,11 @@
   {
    "project": "pydantic",
    "runner": "premium-4",
-   "runs": 3,
+   "runs": 6,
    "failures": 0,
-   "median_s": 84,
+   "median_s": 89,
    "min_s": 84,
-   "max_s": 93,
+   "max_s": 100,
    "median_queue_s": 9,
    "median_billed_minutes": 2,
    "median_cost_usd": 0.012
@@ -638,11 +638,11 @@
   {
    "project": "typescript",
    "runner": "github",
-   "runs": 3,
+   "runs": 7,
    "failures": 0,
-   "median_s": 417,
+   "median_s": 420,
    "min_s": 411,
-   "max_s": 430,
+   "max_s": 579,
    "median_queue_s": 3,
    "median_billed_minutes": 7,
    "median_cost_usd": 0.084
@@ -650,9 +650,9 @@
   {
    "project": "typescript",
    "runner": "basic-2",
-   "runs": 3,
+   "runs": 7,
    "failures": 0,
-   "median_s": 591,
+   "median_s": 550,
    "min_s": 515,
    "max_s": 698,
    "median_queue_s": 11,
@@ -662,11 +662,11 @@
   {
    "project": "typescript",
    "runner": "premium-2",
-   "runs": 3,
+   "runs": 7,
    "failures": 0,
-   "median_s": 427,
+   "median_s": 428,
    "min_s": 426,
-   "max_s": 438,
+   "max_s": 455,
    "median_queue_s": 10,
    "median_billed_minutes": 8,
    "median_cost_usd": 0.024
@@ -674,35 +674,35 @@
   {
    "project": "typescript",
    "runner": "basic-4",
-   "runs": 3,
+   "runs": 7,
    "failures": 0,
-   "median_s": 434,
+   "median_s": 415,
    "min_s": 383,
-   "max_s": 438,
+   "max_s": 442,
    "median_queue_s": 11,
-   "median_billed_minutes": 8,
-   "median_cost_usd": 0.016
+   "median_billed_minutes": 7,
+   "median_cost_usd": 0.014
   },
   {
    "project": "typescript",
    "runner": "premium-4",
-   "runs": 3,
+   "runs": 6,
    "failures": 0,
-   "median_s": 328,
+   "median_s": 348.5,
    "min_s": 298,
-   "max_s": 339,
-   "median_queue_s": 10,
+   "max_s": 370,
+   "median_queue_s": 9.5,
    "median_billed_minutes": 6,
    "median_cost_usd": 0.036
   },
   {
    "project": "vite",
    "runner": "github",
-   "runs": 3,
+   "runs": 7,
    "failures": 0,
-   "median_s": 292,
-   "min_s": 275,
-   "max_s": 301,
+   "median_s": 275,
+   "min_s": 230,
+   "max_s": 303,
    "median_queue_s": 2,
    "median_billed_minutes": 5,
    "median_cost_usd": 0.06
@@ -710,35 +710,35 @@
   {
    "project": "vite",
    "runner": "basic-2",
-   "runs": 3,
+   "runs": 7,
    "failures": 0,
-   "median_s": 483,
-   "min_s": 451,
+   "median_s": 415,
+   "min_s": 379,
    "max_s": 505,
    "median_queue_s": 10,
-   "median_billed_minutes": 9,
-   "median_cost_usd": 0.009
+   "median_billed_minutes": 7,
+   "median_cost_usd": 0.007
   },
   {
    "project": "vite",
    "runner": "premium-2",
-   "runs": 3,
+   "runs": 7,
    "failures": 0,
-   "median_s": 369,
-   "min_s": 358,
+   "median_s": 371,
+   "min_s": 352,
    "max_s": 388,
-   "median_queue_s": 11,
+   "median_queue_s": 10,
    "median_billed_minutes": 7,
    "median_cost_usd": 0.021
   },
   {
    "project": "vite",
    "runner": "basic-4",
-   "runs": 3,
+   "runs": 7,
    "failures": 0,
-   "median_s": 198,
-   "min_s": 195,
-   "max_s": 212,
+   "median_s": 195,
+   "min_s": 174,
+   "max_s": 240,
    "median_queue_s": 11,
    "median_billed_minutes": 4,
    "median_cost_usd": 0.008
@@ -746,11 +746,11 @@
   {
    "project": "vite",
    "runner": "premium-4",
-   "runs": 3,
+   "runs": 6,
    "failures": 0,
-   "median_s": 166,
-   "min_s": 163,
-   "max_s": 171,
+   "median_s": 168.5,
+   "min_s": 155,
+   "max_s": 173,
    "median_queue_s": 10,
    "median_billed_minutes": 3,
    "median_cost_usd": 0.018
@@ -758,10 +758,10 @@
   {
    "project": "vue",
    "runner": "github",
-   "runs": 3,
+   "runs": 7,
    "failures": 0,
    "median_s": 53,
-   "min_s": 53,
+   "min_s": 47,
    "max_s": 66,
    "median_queue_s": 2,
    "median_billed_minutes": 1,
@@ -770,10 +770,10 @@
   {
    "project": "vue",
    "runner": "basic-2",
-   "runs": 3,
+   "runs": 7,
    "failures": 0,
-   "median_s": 85,
-   "min_s": 85,
+   "median_s": 76,
+   "min_s": 73,
    "max_s": 89,
    "median_queue_s": 11,
    "median_billed_minutes": 2,
@@ -782,58 +782,58 @@
   {
    "project": "vue",
    "runner": "premium-2",
-   "runs": 3,
+   "runs": 7,
    "failures": 0,
    "median_s": 64,
-   "min_s": 64,
-   "max_s": 65,
-   "median_queue_s": 9,
+   "min_s": 61,
+   "max_s": 73,
+   "median_queue_s": 10,
    "median_billed_minutes": 2,
    "median_cost_usd": 0.006
   },
   {
    "project": "vue",
    "runner": "basic-4",
-   "runs": 3,
+   "runs": 7,
    "failures": 0,
    "median_s": 48,
-   "min_s": 48,
-   "max_s": 50,
-   "median_queue_s": 10,
+   "min_s": 44,
+   "max_s": 56,
+   "median_queue_s": 11,
    "median_billed_minutes": 1,
    "median_cost_usd": 0.002
   },
   {
    "project": "vue",
    "runner": "premium-4",
-   "runs": 3,
+   "runs": 6,
    "failures": 0,
    "median_s": 36,
    "min_s": 34,
-   "max_s": 40,
-   "median_queue_s": 11,
+   "max_s": 45,
+   "median_queue_s": 10,
    "median_billed_minutes": 1,
    "median_cost_usd": 0.006
   },
   {
    "project": "fd",
    "runner": "github",
-   "runs": 3,
+   "runs": 7,
    "failures": 0,
-   "median_s": 69,
-   "min_s": 63,
+   "median_s": 61,
+   "min_s": 55,
    "max_s": 72,
-   "median_queue_s": 3,
+   "median_queue_s": 2,
    "median_billed_minutes": 2,
    "median_cost_usd": 0.024
   },
   {
    "project": "fd",
    "runner": "basic-2",
-   "runs": 3,
+   "runs": 7,
    "failures": 0,
-   "median_s": 84,
-   "min_s": 70,
+   "median_s": 65,
+   "min_s": 60,
    "max_s": 90,
    "median_queue_s": 10,
    "median_billed_minutes": 2,
@@ -842,23 +842,23 @@
   {
    "project": "fd",
    "runner": "premium-2",
-   "runs": 3,
+   "runs": 7,
    "failures": 0,
    "median_s": 58,
-   "min_s": 51,
+   "min_s": 50,
    "max_s": 61,
-   "median_queue_s": 8,
+   "median_queue_s": 9,
    "median_billed_minutes": 1,
    "median_cost_usd": 0.003
   },
   {
    "project": "fd",
    "runner": "basic-4",
-   "runs": 3,
+   "runs": 7,
    "failures": 0,
-   "median_s": 49,
-   "min_s": 49,
-   "max_s": 52,
+   "median_s": 52,
+   "min_s": 48,
+   "max_s": 63,
    "median_queue_s": 11,
    "median_billed_minutes": 1,
    "median_cost_usd": 0.002
@@ -866,12 +866,12 @@
   {
    "project": "fd",
    "runner": "premium-4",
-   "runs": 3,
+   "runs": 6,
    "failures": 0,
-   "median_s": 45,
+   "median_s": 46,
    "min_s": 41,
-   "max_s": 47,
-   "median_queue_s": 10,
+   "max_s": 50,
+   "median_queue_s": 9.5,
    "median_billed_minutes": 1,
    "median_cost_usd": 0.006
   }
@@ -911,6 +911,30 @@
   },
   {
    "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44661966679",
+   "reason": "warm-up run: fills each runner's dependency caches first; not measured"
+  },
+  {
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44852498053",
+   "reason": "warm-up run: fills each runner's dependency caches first; not measured"
+  },
+  {
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44861133934",
+   "reason": "warm-up run: fills each runner's dependency caches first; not measured"
+  },
+  {
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44864713401",
+   "reason": "warm-up run: fills each runner's dependency caches first; not measured"
+  },
+  {
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44869031296",
+   "reason": "warm-up run: fills each runner's dependency caches first; not measured"
+  },
+  {
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44873506207",
+   "reason": "warm-up run: fills each runner's dependency caches first; not measured"
+  },
+  {
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44878746674",
    "reason": "warm-up run: fills each runner's dependency caches first; not measured"
   },
   {
@@ -2016,6 +2040,34 @@
   {
    "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44609199758/job/135868615534",
    "reason": "recorded before the customer-priority check; not measured"
+  },
+  {
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44852498053/job/136688020037",
+   "reason": "runner ${{ needs.plan.outputs.label }} is not in config/runners.json"
+  },
+  {
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44852498053/job/136688021308",
+   "reason": "runner ${{ needs.plan.outputs.label }} is not in config/runners.json"
+  },
+  {
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44852498053/job/136688021354",
+   "reason": "runner ${{ needs.plan.outputs.label }} is not in config/runners.json"
+  },
+  {
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44852498053/job/136688021625",
+   "reason": "runner ${{ needs.plan.outputs.label }} is not in config/runners.json"
+  },
+  {
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44852498053/job/136688021708",
+   "reason": "runner ${{ needs.plan.outputs.label }} is not in config/runners.json"
+  },
+  {
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44852498053/job/136688025715",
+   "reason": "runner ${{ needs.plan.outputs.label }} is not in config/runners.json"
+  },
+  {
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44852498053/job/136688053733",
+   "reason": "runner ${{ needs.plan.outputs.label }} is not in config/runners.json"
   }
  ],
  "runs": [
@@ -2051,6 +2103,46 @@
   },
   {
    "project": "black",
+   "runner": "github",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 107,
+   "queue_s": 2,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44879814556",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44879814556/job/136774343567"
+  },
+  {
+   "project": "black",
+   "runner": "github",
+   "rep": "f2",
+   "conclusion": "success",
+   "seconds": 118,
+   "queue_s": 2,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44880847056",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44880847056/job/136777441209"
+  },
+  {
+   "project": "black",
+   "runner": "github",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 97,
+   "queue_s": 2,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44881866488",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44881866488/job/136780773388"
+  },
+  {
+   "project": "black",
+   "runner": "github",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 137,
+   "queue_s": 2,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45018238071",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45018238071/job/137197262111"
+  },
+  {
+   "project": "black",
    "runner": "basic-2",
    "rep": "c1",
    "conclusion": "success",
@@ -2078,6 +2170,46 @@
    "queue_s": 11,
    "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44645520796",
    "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44645520796/job/135992135102"
+  },
+  {
+   "project": "black",
+   "runner": "basic-2",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 101,
+   "queue_s": 14,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44874813468",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44874813468/job/136759200127"
+  },
+  {
+   "project": "black",
+   "runner": "basic-2",
+   "rep": "f2",
+   "conclusion": "success",
+   "seconds": 102,
+   "queue_s": 9,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44876115651",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44876115651/job/136763302996"
+  },
+  {
+   "project": "black",
+   "runner": "basic-2",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 98,
+   "queue_s": 10,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44877480464",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44877480464/job/136767151082"
+  },
+  {
+   "project": "black",
+   "runner": "basic-2",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 115,
+   "queue_s": 11,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45026821967",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45026821967/job/137224263969"
   },
   {
    "project": "black",
@@ -2111,6 +2243,46 @@
   },
   {
    "project": "black",
+   "runner": "premium-2",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 77,
+   "queue_s": 8,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44870202554",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44870202554/job/136744487534"
+  },
+  {
+   "project": "black",
+   "runner": "premium-2",
+   "rep": "f2",
+   "conclusion": "success",
+   "seconds": 77,
+   "queue_s": 7,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44871321285",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44871321285/job/136747989120"
+  },
+  {
+   "project": "black",
+   "runner": "premium-2",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 76,
+   "queue_s": 8,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44872429195",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44872429195/job/136751363541"
+  },
+  {
+   "project": "black",
+   "runner": "premium-2",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 78,
+   "queue_s": 9,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45038387904",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45038387904/job/137259238172"
+  },
+  {
+   "project": "black",
    "runner": "basic-4",
    "rep": "c1",
    "conclusion": "success",
@@ -2141,6 +2313,46 @@
   },
   {
    "project": "black",
+   "runner": "basic-4",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 69,
+   "queue_s": 8,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44865852555",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44865852555/job/136731058302"
+  },
+  {
+   "project": "black",
+   "runner": "basic-4",
+   "rep": "f2",
+   "conclusion": "success",
+   "seconds": 65,
+   "queue_s": 12,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44866945300",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44866945300/job/136734264332"
+  },
+  {
+   "project": "black",
+   "runner": "basic-4",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 65,
+   "queue_s": 10,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44867987733",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44867987733/job/136737413488"
+  },
+  {
+   "project": "black",
+   "runner": "basic-4",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 65,
+   "queue_s": 9,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45047886695",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45047886695/job/137288469135"
+  },
+  {
+   "project": "black",
    "runner": "premium-4",
    "rep": "c1",
    "conclusion": "success",
@@ -2168,6 +2380,36 @@
    "queue_s": 9,
    "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44665949794",
    "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44665949794/job/136057417904"
+  },
+  {
+   "project": "black",
+   "runner": "premium-4",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 52,
+   "queue_s": 9,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44862115327",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44862115327/job/136719497731"
+  },
+  {
+   "project": "black",
+   "runner": "premium-4",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 51,
+   "queue_s": 8,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44863838946",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44863838946/job/136724554870"
+  },
+  {
+   "project": "black",
+   "runner": "premium-4",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 54,
+   "queue_s": 11,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45055313865",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45055313865/job/137310974026"
   },
   {
    "project": "cli",
@@ -2201,6 +2443,46 @@
   },
   {
    "project": "cli",
+   "runner": "github",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 196,
+   "queue_s": 3,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44879814556",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44879814556/job/136773983802"
+  },
+  {
+   "project": "cli",
+   "runner": "github",
+   "rep": "f2",
+   "conclusion": "success",
+   "seconds": 176,
+   "queue_s": 6,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44880847056",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44880847056/job/136776973409"
+  },
+  {
+   "project": "cli",
+   "runner": "github",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 200,
+   "queue_s": 2,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44881866488",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44881866488/job/136780236927"
+  },
+  {
+   "project": "cli",
+   "runner": "github",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 210,
+   "queue_s": 2,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45018238071",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45018238071/job/137196744201"
+  },
+  {
+   "project": "cli",
    "runner": "basic-2",
    "rep": "c1",
    "conclusion": "success",
@@ -2228,6 +2510,46 @@
    "queue_s": 11,
    "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44645520796",
    "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44645520796/job/135991338422"
+  },
+  {
+   "project": "cli",
+   "runner": "basic-2",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 308,
+   "queue_s": 10,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44874813468",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44874813468/job/136759559599"
+  },
+  {
+   "project": "cli",
+   "runner": "basic-2",
+   "rep": "f2",
+   "conclusion": "success",
+   "seconds": 312,
+   "queue_s": 9,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44876115651",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44876115651/job/136763810689"
+  },
+  {
+   "project": "cli",
+   "runner": "basic-2",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 308,
+   "queue_s": 13,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44877480464",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44877480464/job/136767720555"
+  },
+  {
+   "project": "cli",
+   "runner": "basic-2",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 332,
+   "queue_s": 8,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45026821967",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45026821967/job/137224702270"
   },
   {
    "project": "cli",
@@ -2261,6 +2583,46 @@
   },
   {
    "project": "cli",
+   "runner": "premium-2",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 282,
+   "queue_s": 10,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44870202554",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44870202554/job/136744651890"
+  },
+  {
+   "project": "cli",
+   "runner": "premium-2",
+   "rep": "f2",
+   "conclusion": "success",
+   "seconds": 305,
+   "queue_s": 14,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44871321285",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44871321285/job/136748067599"
+  },
+  {
+   "project": "cli",
+   "runner": "premium-2",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 296,
+   "queue_s": 9,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44872429195",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44872429195/job/136751723484"
+  },
+  {
+   "project": "cli",
+   "runner": "premium-2",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 279,
+   "queue_s": 11,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45038387904",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45038387904/job/137259335314"
+  },
+  {
+   "project": "cli",
    "runner": "basic-4",
    "rep": "c1",
    "conclusion": "success",
@@ -2291,6 +2653,46 @@
   },
   {
    "project": "cli",
+   "runner": "basic-4",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 170,
+   "queue_s": 11,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44865852555",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44865852555/job/136730878710"
+  },
+  {
+   "project": "cli",
+   "runner": "basic-4",
+   "rep": "f2",
+   "conclusion": "success",
+   "seconds": 153,
+   "queue_s": 12,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44866945300",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44866945300/job/136734166349"
+  },
+  {
+   "project": "cli",
+   "runner": "basic-4",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 156,
+   "queue_s": 11,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44867987733",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44867987733/job/136737483810"
+  },
+  {
+   "project": "cli",
+   "runner": "basic-4",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 185,
+   "queue_s": 11,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45047886695",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45047886695/job/137288746184"
+  },
+  {
+   "project": "cli",
    "runner": "premium-4",
    "rep": "c1",
    "conclusion": "success",
@@ -2318,6 +2720,36 @@
    "queue_s": 11,
    "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44665949794",
    "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44665949794/job/136057100211"
+  },
+  {
+   "project": "cli",
+   "runner": "premium-4",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 144,
+   "queue_s": 10,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44862115327",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44862115327/job/136718927992"
+  },
+  {
+   "project": "cli",
+   "runner": "premium-4",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 157,
+   "queue_s": 9,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44863838946",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44863838946/job/136724231795"
+  },
+  {
+   "project": "cli",
+   "runner": "premium-4",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 143,
+   "queue_s": 12,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45055313865",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45055313865/job/137310624077"
   },
   {
    "project": "codex",
@@ -2351,6 +2783,46 @@
   },
   {
    "project": "codex",
+   "runner": "github",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 381,
+   "queue_s": 3,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44879814556",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44879814556/job/136772429523"
+  },
+  {
+   "project": "codex",
+   "runner": "github",
+   "rep": "f2",
+   "conclusion": "success",
+   "seconds": 353,
+   "queue_s": 2,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44880847056",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44880847056/job/136775600669"
+  },
+  {
+   "project": "codex",
+   "runner": "github",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 399,
+   "queue_s": 3,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44881866488",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44881866488/job/136778713410"
+  },
+  {
+   "project": "codex",
+   "runner": "github",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 382,
+   "queue_s": 2,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45018238071",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45018238071/job/137195149668"
+  },
+  {
+   "project": "codex",
    "runner": "basic-2",
    "rep": "c1",
    "conclusion": "success",
@@ -2378,6 +2850,46 @@
    "queue_s": 14,
    "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44645520796",
    "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44645520796/job/135987020374"
+  },
+  {
+   "project": "codex",
+   "runner": "basic-2",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 596,
+   "queue_s": 10,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44874813468",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44874813468/job/136757097921"
+  },
+  {
+   "project": "codex",
+   "runner": "basic-2",
+   "rep": "f2",
+   "conclusion": "success",
+   "seconds": 662,
+   "queue_s": 8,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44876115651",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44876115651/job/136761083002"
+  },
+  {
+   "project": "codex",
+   "runner": "basic-2",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 612,
+   "queue_s": 13,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44877480464",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44877480464/job/136765287936"
+  },
+  {
+   "project": "codex",
+   "runner": "basic-2",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 688,
+   "queue_s": 11,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45026821967",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45026821967/job/137221577118"
   },
   {
    "project": "codex",
@@ -2411,6 +2923,46 @@
   },
   {
    "project": "codex",
+   "runner": "premium-2",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 432,
+   "queue_s": 12,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44870202554",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44870202554/job/136742826694"
+  },
+  {
+   "project": "codex",
+   "runner": "premium-2",
+   "rep": "f2",
+   "conclusion": "success",
+   "seconds": 435,
+   "queue_s": 9,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44871321285",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44871321285/job/136746294892"
+  },
+  {
+   "project": "codex",
+   "runner": "premium-2",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 507,
+   "queue_s": 10,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44872429195",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44872429195/job/136749727137"
+  },
+  {
+   "project": "codex",
+   "runner": "premium-2",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 450,
+   "queue_s": 9,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45038387904",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45038387904/job/137257157552"
+  },
+  {
+   "project": "codex",
    "runner": "basic-4",
    "rep": "c1",
    "conclusion": "success",
@@ -2441,6 +2993,46 @@
   },
   {
    "project": "codex",
+   "runner": "basic-4",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 381,
+   "queue_s": 8,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44865852555",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44865852555/job/136729236515"
+  },
+  {
+   "project": "codex",
+   "runner": "basic-4",
+   "rep": "f2",
+   "conclusion": "success",
+   "seconds": 365,
+   "queue_s": 8,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44866945300",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44866945300/job/136732635609"
+  },
+  {
+   "project": "codex",
+   "runner": "basic-4",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 385,
+   "queue_s": 10,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44867987733",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44867987733/job/136735905282"
+  },
+  {
+   "project": "codex",
+   "runner": "basic-4",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 478,
+   "queue_s": 11,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45047886695",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45047886695/job/137286391366"
+  },
+  {
+   "project": "codex",
    "runner": "premium-4",
    "rep": "c1",
    "conclusion": "success",
@@ -2468,6 +3060,36 @@
    "queue_s": 10,
    "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44665949794",
    "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44665949794/job/136055195476"
+  },
+  {
+   "project": "codex",
+   "runner": "premium-4",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 303,
+   "queue_s": 8,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44862115327",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44862115327/job/136717607526"
+  },
+  {
+   "project": "codex",
+   "runner": "premium-4",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 263,
+   "queue_s": 12,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44863838946",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44863838946/job/136723019989"
+  },
+  {
+   "project": "codex",
+   "runner": "premium-4",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 289,
+   "queue_s": 8,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45055313865",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45055313865/job/137309154743"
   },
   {
    "project": "mastodon",
@@ -2501,6 +3123,46 @@
   },
   {
    "project": "mastodon",
+   "runner": "github",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 120,
+   "queue_s": 2,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44879814556",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44879814556/job/136773327181"
+  },
+  {
+   "project": "mastodon",
+   "runner": "github",
+   "rep": "f2",
+   "conclusion": "success",
+   "seconds": 119,
+   "queue_s": 2,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44880847056",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44880847056/job/136776466820"
+  },
+  {
+   "project": "mastodon",
+   "runner": "github",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 193,
+   "queue_s": 2,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44881866488",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44881866488/job/136779574190"
+  },
+  {
+   "project": "mastodon",
+   "runner": "github",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 164,
+   "queue_s": 2,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45018238071",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45018238071/job/137195933593"
+  },
+  {
+   "project": "mastodon",
    "runner": "basic-2",
    "rep": "c1",
    "conclusion": "success",
@@ -2528,6 +3190,46 @@
    "queue_s": 11,
    "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44645520796",
    "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44645520796/job/135989622684"
+  },
+  {
+   "project": "mastodon",
+   "runner": "basic-2",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 141,
+   "queue_s": 11,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44874813468",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44874813468/job/136758073887"
+  },
+  {
+   "project": "mastodon",
+   "runner": "basic-2",
+   "rep": "f2",
+   "conclusion": "success",
+   "seconds": 156,
+   "queue_s": 12,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44876115651",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44876115651/job/136762071431"
+  },
+  {
+   "project": "mastodon",
+   "runner": "basic-2",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 140,
+   "queue_s": 11,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44877480464",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44877480464/job/136766129970"
+  },
+  {
+   "project": "mastodon",
+   "runner": "basic-2",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 171,
+   "queue_s": 14,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45026821967",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45026821967/job/137222827276"
   },
   {
    "project": "mastodon",
@@ -2561,6 +3263,46 @@
   },
   {
    "project": "mastodon",
+   "runner": "premium-2",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 119,
+   "queue_s": 10,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44870202554",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44870202554/job/136743553426"
+  },
+  {
+   "project": "mastodon",
+   "runner": "premium-2",
+   "rep": "f2",
+   "conclusion": "success",
+   "seconds": 121,
+   "queue_s": 10,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44871321285",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44871321285/job/136747004490"
+  },
+  {
+   "project": "mastodon",
+   "runner": "premium-2",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 123,
+   "queue_s": 8,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44872429195",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44872429195/job/136750427117"
+  },
+  {
+   "project": "mastodon",
+   "runner": "premium-2",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 127,
+   "queue_s": 13,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45038387904",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45038387904/job/137258060049"
+  },
+  {
+   "project": "mastodon",
    "runner": "basic-4",
    "rep": "c1",
    "conclusion": "success",
@@ -2591,6 +3333,46 @@
   },
   {
    "project": "mastodon",
+   "runner": "basic-4",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 119,
+   "queue_s": 8,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44865852555",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44865852555/job/136729917443"
+  },
+  {
+   "project": "mastodon",
+   "runner": "basic-4",
+   "rep": "f2",
+   "conclusion": "success",
+   "seconds": 125,
+   "queue_s": 10,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44866945300",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44866945300/job/136733278277"
+  },
+  {
+   "project": "mastodon",
+   "runner": "basic-4",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 111,
+   "queue_s": 10,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44867987733",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44867987733/job/136736504969"
+  },
+  {
+   "project": "mastodon",
+   "runner": "basic-4",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 130,
+   "queue_s": 10,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45047886695",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45047886695/job/137287138266"
+  },
+  {
+   "project": "mastodon",
    "runner": "premium-4",
    "rep": "c1",
    "conclusion": "success",
@@ -2618,6 +3400,36 @@
    "queue_s": 10,
    "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44665949794",
    "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44665949794/job/136056114777"
+  },
+  {
+   "project": "mastodon",
+   "runner": "premium-4",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 113,
+   "queue_s": 85,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44862115327",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44862115327/job/136718215475"
+  },
+  {
+   "project": "mastodon",
+   "runner": "premium-4",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 104,
+   "queue_s": 9,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44863838946",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44863838946/job/136723573311"
+  },
+  {
+   "project": "mastodon",
+   "runner": "premium-4",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 110,
+   "queue_s": 12,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45055313865",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45055313865/job/137309903486"
   },
   {
    "project": "flask",
@@ -2651,6 +3463,46 @@
   },
   {
    "project": "flask",
+   "runner": "github",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 14,
+   "queue_s": 2,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44879814556",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44879814556/job/136775227080"
+  },
+  {
+   "project": "flask",
+   "runner": "github",
+   "rep": "f2",
+   "conclusion": "success",
+   "seconds": 23,
+   "queue_s": 2,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44880847056",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44880847056/job/136778338571"
+  },
+  {
+   "project": "flask",
+   "runner": "github",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 23,
+   "queue_s": 3,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44881866488",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44881866488/job/136781566785"
+  },
+  {
+   "project": "flask",
+   "runner": "github",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 20,
+   "queue_s": 2,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45018238071",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45018238071/job/137198310719"
+  },
+  {
+   "project": "flask",
    "runner": "basic-2",
    "rep": "c1",
    "conclusion": "success",
@@ -2678,6 +3530,46 @@
    "queue_s": 21,
    "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44645520796",
    "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44645520796/job/135994943688"
+  },
+  {
+   "project": "flask",
+   "runner": "basic-2",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 15,
+   "queue_s": 12,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44874813468",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44874813468/job/136760253022"
+  },
+  {
+   "project": "flask",
+   "runner": "basic-2",
+   "rep": "f2",
+   "conclusion": "success",
+   "seconds": 13,
+   "queue_s": 9,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44876115651",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44876115651/job/136764382478"
+  },
+  {
+   "project": "flask",
+   "runner": "basic-2",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 14,
+   "queue_s": 11,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44877480464",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44877480464/job/136768214342"
+  },
+  {
+   "project": "flask",
+   "runner": "basic-2",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 14,
+   "queue_s": 9,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45026821967",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45026821967/job/137225579062"
   },
   {
    "project": "flask",
@@ -2711,6 +3603,46 @@
   },
   {
    "project": "flask",
+   "runner": "premium-2",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 11,
+   "queue_s": 8,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44870202554",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44870202554/job/136745377533"
+  },
+  {
+   "project": "flask",
+   "runner": "premium-2",
+   "rep": "f2",
+   "conclusion": "success",
+   "seconds": 13,
+   "queue_s": 8,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44871321285",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44871321285/job/136748907306"
+  },
+  {
+   "project": "flask",
+   "runner": "premium-2",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 9,
+   "queue_s": 10,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44872429195",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44872429195/job/136752223202"
+  },
+  {
+   "project": "flask",
+   "runner": "premium-2",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 10,
+   "queue_s": 14,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45038387904",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45038387904/job/137260271458"
+  },
+  {
+   "project": "flask",
    "runner": "basic-4",
    "rep": "c1",
    "conclusion": "success",
@@ -2741,6 +3673,46 @@
   },
   {
    "project": "flask",
+   "runner": "basic-4",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 14,
+   "queue_s": 12,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44865852555",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44865852555/job/136731924055"
+  },
+  {
+   "project": "flask",
+   "runner": "basic-4",
+   "rep": "f2",
+   "conclusion": "success",
+   "seconds": 13,
+   "queue_s": 8,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44866945300",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44866945300/job/136735060793"
+  },
+  {
+   "project": "flask",
+   "runner": "basic-4",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 14,
+   "queue_s": 10,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44867987733",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44867987733/job/136738133154"
+  },
+  {
+   "project": "flask",
+   "runner": "basic-4",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 17,
+   "queue_s": 10,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45047886695",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45047886695/job/137289526663"
+  },
+  {
+   "project": "flask",
    "runner": "premium-4",
    "rep": "c1",
    "conclusion": "success",
@@ -2768,6 +3740,36 @@
    "queue_s": 11,
    "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44665949794",
    "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44665949794/job/136058465237"
+  },
+  {
+   "project": "flask",
+   "runner": "premium-4",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 10,
+   "queue_s": 10,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44862115327",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44862115327/job/136720199028"
+  },
+  {
+   "project": "flask",
+   "runner": "premium-4",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 13,
+   "queue_s": 11,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44863838946",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44863838946/job/136725296797"
+  },
+  {
+   "project": "flask",
+   "runner": "premium-4",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 9,
+   "queue_s": 10,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45055313865",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45055313865/job/137311805634"
   },
   {
    "project": "guava",
@@ -2801,6 +3803,46 @@
   },
   {
    "project": "guava",
+   "runner": "github",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 742,
+   "queue_s": 3,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44879814556",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44879814556/job/136772429542"
+  },
+  {
+   "project": "guava",
+   "runner": "github",
+   "rep": "f2",
+   "conclusion": "success",
+   "seconds": 731,
+   "queue_s": 2,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44880847056",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44880847056/job/136775600624"
+  },
+  {
+   "project": "guava",
+   "runner": "github",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 685,
+   "queue_s": 2,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44881866488",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44881866488/job/136778713407"
+  },
+  {
+   "project": "guava",
+   "runner": "github",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 729,
+   "queue_s": 2,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45018238071",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45018238071/job/137195149683"
+  },
+  {
+   "project": "guava",
    "runner": "basic-2",
    "rep": "c1",
    "conclusion": "success",
@@ -2828,6 +3870,46 @@
    "queue_s": 11,
    "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44645520796",
    "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44645520796/job/135987020380"
+  },
+  {
+   "project": "guava",
+   "runner": "basic-2",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 865,
+   "queue_s": 9,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44874813468",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44874813468/job/136757097903"
+  },
+  {
+   "project": "guava",
+   "runner": "basic-2",
+   "rep": "f2",
+   "conclusion": "success",
+   "seconds": 877,
+   "queue_s": 8,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44876115651",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44876115651/job/136761082973"
+  },
+  {
+   "project": "guava",
+   "runner": "basic-2",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 871,
+   "queue_s": 12,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44877480464",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44877480464/job/136765287919"
+  },
+  {
+   "project": "guava",
+   "runner": "basic-2",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 962,
+   "queue_s": 12,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45026821967",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45026821967/job/137221577082"
   },
   {
    "project": "guava",
@@ -2861,6 +3943,46 @@
   },
   {
    "project": "guava",
+   "runner": "premium-2",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 672,
+   "queue_s": 11,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44870202554",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44870202554/job/136742826698"
+  },
+  {
+   "project": "guava",
+   "runner": "premium-2",
+   "rep": "f2",
+   "conclusion": "success",
+   "seconds": 669,
+   "queue_s": 11,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44871321285",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44871321285/job/136746294884"
+  },
+  {
+   "project": "guava",
+   "runner": "premium-2",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 673,
+   "queue_s": 11,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44872429195",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44872429195/job/136749727221"
+  },
+  {
+   "project": "guava",
+   "runner": "premium-2",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 711,
+   "queue_s": 10,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45038387904",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45038387904/job/137257157547"
+  },
+  {
+   "project": "guava",
    "runner": "basic-4",
    "rep": "c1",
    "conclusion": "success",
@@ -2891,6 +4013,46 @@
   },
   {
    "project": "guava",
+   "runner": "basic-4",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 746,
+   "queue_s": 9,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44865852555",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44865852555/job/136729236584"
+  },
+  {
+   "project": "guava",
+   "runner": "basic-4",
+   "rep": "f2",
+   "conclusion": "success",
+   "seconds": 723,
+   "queue_s": 14,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44866945300",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44866945300/job/136732635585"
+  },
+  {
+   "project": "guava",
+   "runner": "basic-4",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 737,
+   "queue_s": 8,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44867987733",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44867987733/job/136735905280"
+  },
+  {
+   "project": "guava",
+   "runner": "basic-4",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 663,
+   "queue_s": 12,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45047886695",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45047886695/job/137286391404"
+  },
+  {
+   "project": "guava",
    "runner": "premium-4",
    "rep": "c1",
    "conclusion": "success",
@@ -2918,6 +4080,36 @@
    "queue_s": 10,
    "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44665949794",
    "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44665949794/job/136055195248"
+  },
+  {
+   "project": "guava",
+   "runner": "premium-4",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 645,
+   "queue_s": 10,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44862115327",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44862115327/job/136717607543"
+  },
+  {
+   "project": "guava",
+   "runner": "premium-4",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 595,
+   "queue_s": 11,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44863838946",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44863838946/job/136723020002"
+  },
+  {
+   "project": "guava",
+   "runner": "premium-4",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 643,
+   "queue_s": 8,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45055313865",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45055313865/job/137309154578"
   },
   {
    "project": "vercel-ai",
@@ -2951,6 +4143,46 @@
   },
   {
    "project": "vercel-ai",
+   "runner": "github",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 220,
+   "queue_s": 2,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44879814556",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44879814556/job/136772429487"
+  },
+  {
+   "project": "vercel-ai",
+   "runner": "github",
+   "rep": "f2",
+   "conclusion": "success",
+   "seconds": 222,
+   "queue_s": 1,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44880847056",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44880847056/job/136775600603"
+  },
+  {
+   "project": "vercel-ai",
+   "runner": "github",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 223,
+   "queue_s": 2,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44881866488",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44881866488/job/136778713432"
+  },
+  {
+   "project": "vercel-ai",
+   "runner": "github",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 189,
+   "queue_s": 2,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45018238071",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45018238071/job/137195149692"
+  },
+  {
+   "project": "vercel-ai",
    "runner": "basic-2",
    "rep": "c1",
    "conclusion": "success",
@@ -2978,6 +4210,46 @@
    "queue_s": 10,
    "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44645520796",
    "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44645520796/job/135987020255"
+  },
+  {
+   "project": "vercel-ai",
+   "runner": "basic-2",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 229,
+   "queue_s": 10,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44874813468",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44874813468/job/136757097909"
+  },
+  {
+   "project": "vercel-ai",
+   "runner": "basic-2",
+   "rep": "f2",
+   "conclusion": "success",
+   "seconds": 238,
+   "queue_s": 10,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44876115651",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44876115651/job/136761082995"
+  },
+  {
+   "project": "vercel-ai",
+   "runner": "basic-2",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 207,
+   "queue_s": 13,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44877480464",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44877480464/job/136765287945"
+  },
+  {
+   "project": "vercel-ai",
+   "runner": "basic-2",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 259,
+   "queue_s": 13,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45026821967",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45026821967/job/137221577122"
   },
   {
    "project": "vercel-ai",
@@ -3011,6 +4283,46 @@
   },
   {
    "project": "vercel-ai",
+   "runner": "premium-2",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 167,
+   "queue_s": 9,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44870202554",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44870202554/job/136742826703"
+  },
+  {
+   "project": "vercel-ai",
+   "runner": "premium-2",
+   "rep": "f2",
+   "conclusion": "success",
+   "seconds": 167,
+   "queue_s": 10,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44871321285",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44871321285/job/136746294889"
+  },
+  {
+   "project": "vercel-ai",
+   "runner": "premium-2",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 170,
+   "queue_s": 11,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44872429195",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44872429195/job/136749727205"
+  },
+  {
+   "project": "vercel-ai",
+   "runner": "premium-2",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 185,
+   "queue_s": 9,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45038387904",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45038387904/job/137257157544"
+  },
+  {
+   "project": "vercel-ai",
    "runner": "basic-4",
    "rep": "c1",
    "conclusion": "success",
@@ -3041,6 +4353,46 @@
   },
   {
    "project": "vercel-ai",
+   "runner": "basic-4",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 150,
+   "queue_s": 10,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44865852555",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44865852555/job/136729236680"
+  },
+  {
+   "project": "vercel-ai",
+   "runner": "basic-4",
+   "rep": "f2",
+   "conclusion": "success",
+   "seconds": 146,
+   "queue_s": 9,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44866945300",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44866945300/job/136732635595"
+  },
+  {
+   "project": "vercel-ai",
+   "runner": "basic-4",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 135,
+   "queue_s": 12,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44867987733",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44867987733/job/136735905398"
+  },
+  {
+   "project": "vercel-ai",
+   "runner": "basic-4",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 138,
+   "queue_s": 15,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45047886695",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45047886695/job/137286391414"
+  },
+  {
+   "project": "vercel-ai",
    "runner": "premium-4",
    "rep": "c1",
    "conclusion": "success",
@@ -3068,6 +4420,36 @@
    "queue_s": 11,
    "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44665949794",
    "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44665949794/job/136055195440"
+  },
+  {
+   "project": "vercel-ai",
+   "runner": "premium-4",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 135,
+   "queue_s": 9,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44862115327",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44862115327/job/136717607510"
+  },
+  {
+   "project": "vercel-ai",
+   "runner": "premium-4",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 114,
+   "queue_s": 11,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44863838946",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44863838946/job/136723019957"
+  },
+  {
+   "project": "vercel-ai",
+   "runner": "premium-4",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 144,
+   "queue_s": 8,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45055313865",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45055313865/job/137309154589"
   },
   {
    "project": "pydantic",
@@ -3101,6 +4483,46 @@
   },
   {
    "project": "pydantic",
+   "runner": "github",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 132,
+   "queue_s": 2,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44879814556",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44879814556/job/136773830256"
+  },
+  {
+   "project": "pydantic",
+   "runner": "github",
+   "rep": "f2",
+   "conclusion": "success",
+   "seconds": 127,
+   "queue_s": 3,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44880847056",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44880847056/job/136776932623"
+  },
+  {
+   "project": "pydantic",
+   "runner": "github",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 122,
+   "queue_s": 3,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44881866488",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44881866488/job/136780306227"
+  },
+  {
+   "project": "pydantic",
+   "runner": "github",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 150,
+   "queue_s": 2,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45018238071",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45018238071/job/137196630120"
+  },
+  {
+   "project": "pydantic",
    "runner": "basic-2",
    "rep": "c1",
    "conclusion": "success",
@@ -3128,6 +4550,46 @@
    "queue_s": 11,
    "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44645520796",
    "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44645520796/job/135990968884"
+  },
+  {
+   "project": "pydantic",
+   "runner": "basic-2",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 109,
+   "queue_s": 13,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44874813468",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44874813468/job/136758703385"
+  },
+  {
+   "project": "pydantic",
+   "runner": "basic-2",
+   "rep": "f2",
+   "conclusion": "success",
+   "seconds": 118,
+   "queue_s": 11,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44876115651",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44876115651/job/136762763593"
+  },
+  {
+   "project": "pydantic",
+   "runner": "basic-2",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 110,
+   "queue_s": 8,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44877480464",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44877480464/job/136766705351"
+  },
+  {
+   "project": "pydantic",
+   "runner": "basic-2",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 134,
+   "queue_s": 9,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45026821967",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45026821967/job/137223657868"
   },
   {
    "project": "pydantic",
@@ -3161,6 +4623,46 @@
   },
   {
    "project": "pydantic",
+   "runner": "premium-2",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 91,
+   "queue_s": 7,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44870202554",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44870202554/job/136744083008"
+  },
+  {
+   "project": "pydantic",
+   "runner": "premium-2",
+   "rep": "f2",
+   "conclusion": "success",
+   "seconds": 105,
+   "queue_s": 11,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44871321285",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44871321285/job/136747539675"
+  },
+  {
+   "project": "pydantic",
+   "runner": "premium-2",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 102,
+   "queue_s": 8,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44872429195",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44872429195/job/136750935339"
+  },
+  {
+   "project": "pydantic",
+   "runner": "premium-2",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 93,
+   "queue_s": 11,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45038387904",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45038387904/job/137258739572"
+  },
+  {
+   "project": "pydantic",
    "runner": "basic-4",
    "rep": "c1",
    "conclusion": "success",
@@ -3191,6 +4693,46 @@
   },
   {
    "project": "pydantic",
+   "runner": "basic-4",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 131,
+   "queue_s": 11,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44865852555",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44865852555/job/136730466537"
+  },
+  {
+   "project": "pydantic",
+   "runner": "basic-4",
+   "rep": "f2",
+   "conclusion": "success",
+   "seconds": 98,
+   "queue_s": 8,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44866945300",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44866945300/job/136733832399"
+  },
+  {
+   "project": "pydantic",
+   "runner": "basic-4",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 99,
+   "queue_s": 9,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44867987733",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44867987733/job/136736986746"
+  },
+  {
+   "project": "pydantic",
+   "runner": "basic-4",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 126,
+   "queue_s": 13,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45047886695",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45047886695/job/137287804201"
+  },
+  {
+   "project": "pydantic",
    "runner": "premium-4",
    "rep": "c1",
    "conclusion": "success",
@@ -3218,6 +4760,36 @@
    "queue_s": 9,
    "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44665949794",
    "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44665949794/job/136056815554"
+  },
+  {
+   "project": "pydantic",
+   "runner": "premium-4",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 95,
+   "queue_s": 7,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44862115327",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44862115327/job/136719056816"
+  },
+  {
+   "project": "pydantic",
+   "runner": "premium-4",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 100,
+   "queue_s": 12,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44863838946",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44863838946/job/136724065585"
+  },
+  {
+   "project": "pydantic",
+   "runner": "premium-4",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 85,
+   "queue_s": 9,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45055313865",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45055313865/job/137310516806"
   },
   {
    "project": "typescript",
@@ -3251,6 +4823,46 @@
   },
   {
    "project": "typescript",
+   "runner": "github",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 428,
+   "queue_s": 3,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44879814556",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44879814556/job/136772429563"
+  },
+  {
+   "project": "typescript",
+   "runner": "github",
+   "rep": "f2",
+   "conclusion": "success",
+   "seconds": 416,
+   "queue_s": 2,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44880847056",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44880847056/job/136775600633"
+  },
+  {
+   "project": "typescript",
+   "runner": "github",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 579,
+   "queue_s": 3,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44881866488",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44881866488/job/136778713462"
+  },
+  {
+   "project": "typescript",
+   "runner": "github",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 420,
+   "queue_s": 2,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45018238071",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45018238071/job/137195149725"
+  },
+  {
+   "project": "typescript",
    "runner": "basic-2",
    "rep": "c1",
    "conclusion": "success",
@@ -3278,6 +4890,46 @@
    "queue_s": 11,
    "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44645520796",
    "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44645520796/job/135987020282"
+  },
+  {
+   "project": "typescript",
+   "runner": "basic-2",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 538,
+   "queue_s": 11,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44874813468",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44874813468/job/136757097934"
+  },
+  {
+   "project": "typescript",
+   "runner": "basic-2",
+   "rep": "f2",
+   "conclusion": "success",
+   "seconds": 550,
+   "queue_s": 10,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44876115651",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44876115651/job/136761083071"
+  },
+  {
+   "project": "typescript",
+   "runner": "basic-2",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 526,
+   "queue_s": 13,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44877480464",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44877480464/job/136765287917"
+  },
+  {
+   "project": "typescript",
+   "runner": "basic-2",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 607,
+   "queue_s": 13,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45026821967",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45026821967/job/137221577055"
   },
   {
    "project": "typescript",
@@ -3311,6 +4963,46 @@
   },
   {
    "project": "typescript",
+   "runner": "premium-2",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 427,
+   "queue_s": 12,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44870202554",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44870202554/job/136742826722"
+  },
+  {
+   "project": "typescript",
+   "runner": "premium-2",
+   "rep": "f2",
+   "conclusion": "success",
+   "seconds": 437,
+   "queue_s": 12,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44871321285",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44871321285/job/136746294876"
+  },
+  {
+   "project": "typescript",
+   "runner": "premium-2",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 455,
+   "queue_s": 11,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44872429195",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44872429195/job/136749727111"
+  },
+  {
+   "project": "typescript",
+   "runner": "premium-2",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 428,
+   "queue_s": 10,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45038387904",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45038387904/job/137257157539"
+  },
+  {
+   "project": "typescript",
    "runner": "basic-4",
    "rep": "c1",
    "conclusion": "success",
@@ -3341,6 +5033,46 @@
   },
   {
    "project": "typescript",
+   "runner": "basic-4",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 442,
+   "queue_s": 9,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44865852555",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44865852555/job/136729236625"
+  },
+  {
+   "project": "typescript",
+   "runner": "basic-4",
+   "rep": "f2",
+   "conclusion": "success",
+   "seconds": 415,
+   "queue_s": 14,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44866945300",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44866945300/job/136732635621"
+  },
+  {
+   "project": "typescript",
+   "runner": "basic-4",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 395,
+   "queue_s": 10,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44867987733",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44867987733/job/136735905321"
+  },
+  {
+   "project": "typescript",
+   "runner": "basic-4",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 393,
+   "queue_s": 16,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45047886695",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45047886695/job/137286391380"
+  },
+  {
+   "project": "typescript",
    "runner": "premium-4",
    "rep": "c1",
    "conclusion": "success",
@@ -3368,6 +5100,36 @@
    "queue_s": 10,
    "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44665949794",
    "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44665949794/job/136055195271"
+  },
+  {
+   "project": "typescript",
+   "runner": "premium-4",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 358,
+   "queue_s": 9,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44862115327",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44862115327/job/136717607550"
+  },
+  {
+   "project": "typescript",
+   "runner": "premium-4",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 370,
+   "queue_s": 12,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44863838946",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44863838946/job/136723020012"
+  },
+  {
+   "project": "typescript",
+   "runner": "premium-4",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 361,
+   "queue_s": 8,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45055313865",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45055313865/job/137309154599"
   },
   {
    "project": "vite",
@@ -3401,6 +5163,46 @@
   },
   {
    "project": "vite",
+   "runner": "github",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 261,
+   "queue_s": 2,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44879814556",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44879814556/job/136774166959"
+  },
+  {
+   "project": "vite",
+   "runner": "github",
+   "rep": "f2",
+   "conclusion": "success",
+   "seconds": 238,
+   "queue_s": 2,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44880847056",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44880847056/job/136777224411"
+  },
+  {
+   "project": "vite",
+   "runner": "github",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 230,
+   "queue_s": 2,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44881866488",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44881866488/job/136780914110"
+  },
+  {
+   "project": "vite",
+   "runner": "github",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 303,
+   "queue_s": 2,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45018238071",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45018238071/job/137196896787"
+  },
+  {
+   "project": "vite",
    "runner": "basic-2",
    "rep": "c1",
    "conclusion": "success",
@@ -3428,6 +5230,46 @@
    "queue_s": 10,
    "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44645520796",
    "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44645520796/job/135991024121"
+  },
+  {
+   "project": "vite",
+   "runner": "basic-2",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 379,
+   "queue_s": 11,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44874813468",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44874813468/job/136759339588"
+  },
+  {
+   "project": "vite",
+   "runner": "basic-2",
+   "rep": "f2",
+   "conclusion": "success",
+   "seconds": 403,
+   "queue_s": 10,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44876115651",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44876115651/job/136763359720"
+  },
+  {
+   "project": "vite",
+   "runner": "basic-2",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 389,
+   "queue_s": 9,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44877480464",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44877480464/job/136767340155"
+  },
+  {
+   "project": "vite",
+   "runner": "basic-2",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 415,
+   "queue_s": 12,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45026821967",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45026821967/job/137224352067"
   },
   {
    "project": "vite",
@@ -3461,6 +5303,46 @@
   },
   {
    "project": "vite",
+   "runner": "premium-2",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 352,
+   "queue_s": 9,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44870202554",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44870202554/job/136744630886"
+  },
+  {
+   "project": "vite",
+   "runner": "premium-2",
+   "rep": "f2",
+   "conclusion": "success",
+   "seconds": 377,
+   "queue_s": 11,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44871321285",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44871321285/job/136748086786"
+  },
+  {
+   "project": "vite",
+   "runner": "premium-2",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 371,
+   "queue_s": 10,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44872429195",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44872429195/job/136751530847"
+  },
+  {
+   "project": "vite",
+   "runner": "premium-2",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 371,
+   "queue_s": 8,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45038387904",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45038387904/job/137259241028"
+  },
+  {
+   "project": "vite",
    "runner": "basic-4",
    "rep": "c1",
    "conclusion": "success",
@@ -3491,6 +5373,46 @@
   },
   {
    "project": "vite",
+   "runner": "basic-4",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 187,
+   "queue_s": 8,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44865852555",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44865852555/job/136731146890"
+  },
+  {
+   "project": "vite",
+   "runner": "basic-4",
+   "rep": "f2",
+   "conclusion": "success",
+   "seconds": 174,
+   "queue_s": 12,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44866945300",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44866945300/job/136734391417"
+  },
+  {
+   "project": "vite",
+   "runner": "basic-4",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 176,
+   "queue_s": 9,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44867987733",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44867987733/job/136737524622"
+  },
+  {
+   "project": "vite",
+   "runner": "basic-4",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 240,
+   "queue_s": 13,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45047886695",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45047886695/job/137288360482"
+  },
+  {
+   "project": "vite",
    "runner": "premium-4",
    "rep": "c1",
    "conclusion": "success",
@@ -3518,6 +5440,36 @@
    "queue_s": 10,
    "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44665949794",
    "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44665949794/job/136057339012"
+  },
+  {
+   "project": "vite",
+   "runner": "premium-4",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 172,
+   "queue_s": 12,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44862115327",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44862115327/job/136719166645"
+  },
+  {
+   "project": "vite",
+   "runner": "premium-4",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 155,
+   "queue_s": 7,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44863838946",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44863838946/job/136724693809"
+  },
+  {
+   "project": "vite",
+   "runner": "premium-4",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 173,
+   "queue_s": 11,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45055313865",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45055313865/job/137310974954"
   },
   {
    "project": "vue",
@@ -3551,6 +5503,46 @@
   },
   {
    "project": "vue",
+   "runner": "github",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 58,
+   "queue_s": 2,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44879814556",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44879814556/job/136774758163"
+  },
+  {
+   "project": "vue",
+   "runner": "github",
+   "rep": "f2",
+   "conclusion": "success",
+   "seconds": 47,
+   "queue_s": 2,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44880847056",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44880847056/job/136777907199"
+  },
+  {
+   "project": "vue",
+   "runner": "github",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 51,
+   "queue_s": 2,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44881866488",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44881866488/job/136781141402"
+  },
+  {
+   "project": "vue",
+   "runner": "github",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 52,
+   "queue_s": 2,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45018238071",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45018238071/job/137197830017"
+  },
+  {
+   "project": "vue",
    "runner": "basic-2",
    "rep": "c1",
    "conclusion": "success",
@@ -3578,6 +5570,46 @@
    "queue_s": 36,
    "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44645520796",
    "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44645520796/job/135993297254"
+  },
+  {
+   "project": "vue",
+   "runner": "basic-2",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 73,
+   "queue_s": 9,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44874813468",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44874813468/job/136759647645"
+  },
+  {
+   "project": "vue",
+   "runner": "basic-2",
+   "rep": "f2",
+   "conclusion": "success",
+   "seconds": 75,
+   "queue_s": 9,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44876115651",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44876115651/job/136763752569"
+  },
+  {
+   "project": "vue",
+   "runner": "basic-2",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 73,
+   "queue_s": 8,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44877480464",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44877480464/job/136767600365"
+  },
+  {
+   "project": "vue",
+   "runner": "basic-2",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 76,
+   "queue_s": 14,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45026821967",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45026821967/job/137224827632"
   },
   {
    "project": "vue",
@@ -3611,6 +5643,46 @@
   },
   {
    "project": "vue",
+   "runner": "premium-2",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 62,
+   "queue_s": 12,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44870202554",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44870202554/job/136744832609"
+  },
+  {
+   "project": "vue",
+   "runner": "premium-2",
+   "rep": "f2",
+   "conclusion": "success",
+   "seconds": 61,
+   "queue_s": 11,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44871321285",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44871321285/job/136748319841"
+  },
+  {
+   "project": "vue",
+   "runner": "premium-2",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 73,
+   "queue_s": 9,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44872429195",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44872429195/job/136751683199"
+  },
+  {
+   "project": "vue",
+   "runner": "premium-2",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 62,
+   "queue_s": 10,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45038387904",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45038387904/job/137259655747"
+  },
+  {
+   "project": "vue",
    "runner": "basic-4",
    "rep": "c1",
    "conclusion": "success",
@@ -3641,6 +5713,46 @@
   },
   {
    "project": "vue",
+   "runner": "basic-4",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 48,
+   "queue_s": 11,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44865852555",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44865852555/job/136731388846"
+  },
+  {
+   "project": "vue",
+   "runner": "basic-4",
+   "rep": "f2",
+   "conclusion": "success",
+   "seconds": 44,
+   "queue_s": 12,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44866945300",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44866945300/job/136734572051"
+  },
+  {
+   "project": "vue",
+   "runner": "basic-4",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 44,
+   "queue_s": 8,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44867987733",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44867987733/job/136737710829"
+  },
+  {
+   "project": "vue",
+   "runner": "basic-4",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 56,
+   "queue_s": 15,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45047886695",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45047886695/job/137288826534"
+  },
+  {
+   "project": "vue",
    "runner": "premium-4",
    "rep": "c1",
    "conclusion": "success",
@@ -3668,6 +5780,36 @@
    "queue_s": 9,
    "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44665949794",
    "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44665949794/job/136057826068"
+  },
+  {
+   "project": "vue",
+   "runner": "premium-4",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 36,
+   "queue_s": 9,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44862115327",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44862115327/job/136719759511"
+  },
+  {
+   "project": "vue",
+   "runner": "premium-4",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 45,
+   "queue_s": 17,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44863838946",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44863838946/job/136724810958"
+  },
+  {
+   "project": "vue",
+   "runner": "premium-4",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 36,
+   "queue_s": 7,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45055313865",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45055313865/job/137311305454"
   },
   {
    "project": "fd",
@@ -3701,6 +5843,46 @@
   },
   {
    "project": "fd",
+   "runner": "github",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 55,
+   "queue_s": 2,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44879814556",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44879814556/job/136775003185"
+  },
+  {
+   "project": "fd",
+   "runner": "github",
+   "rep": "f2",
+   "conclusion": "success",
+   "seconds": 58,
+   "queue_s": 2,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44880847056",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44880847056/job/136778095491"
+  },
+  {
+   "project": "fd",
+   "runner": "github",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 61,
+   "queue_s": 2,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44881866488",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44881866488/job/136781328471"
+  },
+  {
+   "project": "fd",
+   "runner": "github",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 61,
+   "queue_s": 2,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45018238071",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45018238071/job/137198054611"
+  },
+  {
+   "project": "fd",
    "runner": "basic-2",
    "rep": "c1",
    "conclusion": "success",
@@ -3728,6 +5910,46 @@
    "queue_s": 10,
    "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44645520796",
    "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44645520796/job/135994200889"
+  },
+  {
+   "project": "fd",
+   "runner": "basic-2",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 61,
+   "queue_s": 8,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44874813468",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44874813468/job/136759967801"
+  },
+  {
+   "project": "fd",
+   "runner": "basic-2",
+   "rep": "f2",
+   "conclusion": "success",
+   "seconds": 63,
+   "queue_s": 10,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44876115651",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44876115651/job/136764091113"
+  },
+  {
+   "project": "fd",
+   "runner": "basic-2",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 60,
+   "queue_s": 8,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44877480464",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44877480464/job/136767936360"
+  },
+  {
+   "project": "fd",
+   "runner": "basic-2",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 65,
+   "queue_s": 12,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45026821967",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45026821967/job/137225229978"
   },
   {
    "project": "fd",
@@ -3761,6 +5983,46 @@
   },
   {
    "project": "fd",
+   "runner": "premium-2",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 59,
+   "queue_s": 8,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44870202554",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44870202554/job/136745119018"
+  },
+  {
+   "project": "fd",
+   "runner": "premium-2",
+   "rep": "f2",
+   "conclusion": "success",
+   "seconds": 61,
+   "queue_s": 13,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44871321285",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44871321285/job/136748610103"
+  },
+  {
+   "project": "fd",
+   "runner": "premium-2",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 50,
+   "queue_s": 9,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44872429195",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44872429195/job/136751997645"
+  },
+  {
+   "project": "fd",
+   "runner": "premium-2",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 51,
+   "queue_s": 10,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45038387904",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45038387904/job/137259998669"
+  },
+  {
+   "project": "fd",
    "runner": "basic-4",
    "rep": "c1",
    "conclusion": "success",
@@ -3791,6 +6053,46 @@
   },
   {
    "project": "fd",
+   "runner": "basic-4",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 53,
+   "queue_s": 13,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44865852555",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44865852555/job/136731641041"
+  },
+  {
+   "project": "fd",
+   "runner": "basic-4",
+   "rep": "f2",
+   "conclusion": "success",
+   "seconds": 52,
+   "queue_s": 11,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44866945300",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44866945300/job/136734802206"
+  },
+  {
+   "project": "fd",
+   "runner": "basic-4",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 48,
+   "queue_s": 9,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44867987733",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44867987733/job/136737913437"
+  },
+  {
+   "project": "fd",
+   "runner": "basic-4",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 63,
+   "queue_s": 11,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45047886695",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45047886695/job/137289165053"
+  },
+  {
+   "project": "fd",
    "runner": "premium-4",
    "rep": "c1",
    "conclusion": "success",
@@ -3818,6 +6120,36 @@
    "queue_s": 10,
    "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44665949794",
    "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44665949794/job/136058104379"
+  },
+  {
+   "project": "fd",
+   "runner": "premium-4",
+   "rep": "f1",
+   "conclusion": "success",
+   "seconds": 50,
+   "queue_s": 9,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44862115327",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44862115327/job/136719948977"
+  },
+  {
+   "project": "fd",
+   "runner": "premium-4",
+   "rep": "f3",
+   "conclusion": "success",
+   "seconds": 42,
+   "queue_s": 8,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/44863838946",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/44863838946/job/136725075600"
+  },
+  {
+   "project": "fd",
+   "runner": "premium-4",
+   "rep": "weekly-2026-11-22",
+   "conclusion": "success",
+   "seconds": 49,
+   "queue_s": 10,
+   "run_url": "https://github.com/sengirunners/benchmarks/actions/runs/45055313865",
+   "job_url": "https://github.com/sengirunners/benchmarks/actions/runs/45055313865/job/137311519090"
   }
  ]
 }
